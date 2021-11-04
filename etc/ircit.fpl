@@ -1,0 +1,86 @@
+ /*
+ ** Typical  script like this would hold your own customizations
+ */
+
+ /* Function prototypes */
+ export void ToggleHoldMode (void); /* for F5 keybinding */
+ export void YouJoinedChan (string); /* displays nice banner upon chan join */
+
+
+ {
+   /* absolute classic aliases */
+   alias ("P", "prog(\"PART\", $#*);", "  P - Leave channel.");
+   alias ("L", "prog(\"PART\", $#*);", "  L - Leave channel.");
+   alias ("I", "prog(\"INVITE\", $#*);", "  I <NICK> [#CHANNEL]" );
+   alias ("H", "prog(\"HELP\", $#*);", "  H - Help");
+   alias ("T", "toserv(\"TOPIC $*\n\")", "  T - Topic");
+   alias ("M", "prog(\"MSG\", $#*);", "  M - The /MSG command.");
+   alias ("S", "prog(\"SERVER\", $#*);", "  S - The /SERVER command.");
+   alias ("W", "prog(\"WHO\", $#*);", "  W - The /WHO command.");
+   alias ("WI", "prog(\"WHOIS\", $#*);", "  WI - The /WHOIS command.");
+
+   alias ("OP", "toserver(\"MODE \" + \"$C \" + \"+o \" + \"$1 \\n\");", "");
+   alias ("DOP", "toserver(\"MODE \" + \"$C \" + \"-o \" + \"$1 \\n\");", "");
+   alias ("MOP", "prog(\"MASS\", $#1 + \" +o\");", "  MOP - Mass-op");
+   alias ("MDOP", "prog(\"MASS\", $#1 + \" -o\");", "  MDOP - Mass-deop");
+
+   /* you can supply empty-string for the help-string */
+   alias ("LK", "prog(\"LOOKUP\", $#*);", "");
+   alias ("PING", "prog(\"CTCP\", \"$1 PING\");", "");
+
+
+   /* Key-Bindings */
+   /* Please notice F1-F4 are internally defined, but you can */
+   /* override that. They here for demo only. */
+   /*
+   bindkey (265, "inw_complete();", "Completion"); //F1 
+   bindkey (266, "lastmsg_action();", "Last Msg Action"); //F2 
+   bindkey (267, "loadmenubar(0);", "Menubar"); //F3
+   bindkey (268, "prog(\"SERVER\", \"-SCRL\");", "Servers List"); //F4
+   */
+
+   /* live example...*/
+   bindkey (269, "ToggleHoldMode();", "Set HOLD_MODE ON/OFF");  /* F5 */
+
+
+   /* An example of Event Association in IRCIT */
+   assoc (eventidx("CHANJOIN"), "*", "YouJoinedChan($#1);");
+
+
+   /* You can place command to be automatically executed here */
+   /* for some strange reason, if you don't put them at the end of the */
+   /* script, they'll fail. No idea why. */
+   prog("LOOKUP", "ppp0");  /* fetch ppp0's IP - needed for DCC */
+
+   exit;
+ }
+
+
+ /* keybinding definition for F5 - set/unset HOLD_MODE */
+ void ToggleHoldMode (void)
+
+ {
+  string s;
+
+    if ((stricmp(valueof("HOLD_MODE"), "ON"))==0)  s="OFF";
+    else  s="ON";
+
+   prog("SET", "HOLD_MODE " + s);
+
+ }  /**/
+
+
+ /* display nice banner upon channel join */
+ void YouJoinedChan (string chan)
+
+ {
+  string s=" %$201%$196,40%$191\n"
+           " %$179  You have joined channel %s!%$32,*\n"
+           " %$192%$196,40%$217\n";
+
+   say (s, chan, 40-(26+strlen(chan)));
+
+   /* set LASTLOG_LEVEL to some practical values */
+   set ("LASTLOG_LEVEL", "PUB:25,JOIN:20,KICK:20");
+ }
+

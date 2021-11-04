@@ -1,0 +1,136 @@
+
+_________________________
+ IRCIT 0.3.1 20AUG98
+
+ ------------------------------
+  NEW FEATURES AND ENHANCEMENTS:
+ ------------------------------
+ - The top-most window (the active window), has different corner
+   decoration to make it stand out from the rest.
+ - Intruduced new semantics for window-movement. In order to move a window,
+   you'll need to press CTRL-V. A special visual feedback will confirm this
+   change. Use the arrow-keys to move it around, or vi-style keys: l-k-h-j.
+   Any other key will terminate this mode.
+ - Introduced shortcuts in menubar and menuboxes. Also added new semantics
+   for menubar/box navigation: you can use numbers to jump to the desired
+   entry.
+ - Many visual effects like animated window-poups and closures. Menubar will
+   blink if reactivated. I also introduced some delays to emphasize these
+   effects, otherwise they'd look like flickering on faster machines. This's
+   not user-controlable yet.
+ - User-defined aliases can include help string. It will be integrated with
+   the on-line help facility.
+   
+
+ ------------------
+  BUG FIXES:
+ ------------------
+ - Fixed important bug with alias expansion. Imbeded quote characters,
+   '"', when used in arguments to an alias, would confuse the fpl interpreter. 
+ - Cursor will not show up after the client resumed running in the foreground.
+   (as a result of CTRL-Z action)
+ - Fixed cursor-visibility in Dialogboxes - not exactly perfect fix, though.
+ - Fixed the "Sorry, i need to be fixed first" error message generated when
+   an entry in the Help scrolling list is selected.
+
+_________________________
+ IRCIT 0.3  16JUN98
+
+ ------------------------------
+  NEW FEATURES AND ENHANCMENTS:
+ ------------------------------
+ - Added limited ket-binding facility. Limited only in the sense that small
+   set of keys can be bound, but _not_ in what they could be bound to.
+   Current implementation allows for the binding of Function Keys, F1-F22.
+ - New set variable AUTO_HOLD_MODE. When set, IRCIT will be automatically
+   set the HOLD_MODE variable ON whenever the main window is unavailable
+   for displaying data (i.e. when GUI is used). When OFF, the output is 
+   flushed through the lower status window.
+ - Added Last Log facility. It allows finer control on what to keep in 
+   Last Log, and can be set seperately for each channel. Check out the new
+   /LASTLOG command and the new LAST_LOG set-variable.
+ - Added new switch to the CHANNELS command, -LOG. Displays Last Log settings
+   for channels.
+ - Rewrote the HISTORY command. It's now possible to save/load history files.
+   You can even PLAY history files, whereby they'll be treated as if they 
+   were typed in the program. Please read the entry for HISTORY in 
+   ircit.help file. Also related to this facility the new set-variable 
+   HISTORY_DIR.
+ - The quality of the documentation has improved. A seperate directory, 
+   programming, in the doc directory was created with many files concerned
+   with script-writing.
+ - Many little enhancements and consistency checks.
+
+ ------------------
+  BUG FIXES:
+ ------------------
+ - I haven't touched the GUI system for this release. So any reported bugs
+   will probably remain outstanding.
+ - Many little fixes and enhancments.
+
+_________________________
+ IRCIT 0.2  22MAY98
+
+ ------------------------------
+  NEW FEATURES AND ENHANCMENTS:
+ ------------------------------
+ - Added scripting support!
+   99% C-like syntax language was incorporated into IRCIT.
+ - /ALIAS command was added with sophisticated set of support-macros.
+ - /HELP command was added. Neatly prints the syntax. Also in the process
+    of removing the -h switch from all the commands - use /HELP instead. 
+ - /FPL command was added. Command-line interface to the interpreter.
+ - /LOAD command was added. Loads files into the interpreter.
+ - Improved completion facility. It's now faster and displays all possible
+   completions even your aliases!
+ - You can use the completion facility to complete the /HELP command arguments. 
+ - Some changes in the syntax; `*' should be used now instead of `*.*'
+   but you can escape `*' with `\' to get the literal meaning.
+   e.g. instead of: ``/ignore -*.*'' you can say ``/ignore -*''
+   if you have `*' as valid entry, then you'll need to escape it in the
+   command: ``/ignor -\*''. Note: not all commands have been converted to
+   this format yet.
+ - A posted window will be automatically killed if it's data ceases to exist
+   (in a truely dramaic way!). To try this, join couple of dummy channels, 
+   get window posted for each channel (thru menu) then cover them with
+   other windows (eg servers, timers, help, about...) now type /quit followed
+   by ``Insert'' key (if you press enter, the active window will catch it
+   and something else will take place).
+ - Added GUI interface to IRC's /OPER command in form of dialog-box. 
+ - Windows can be moved around. Internally its fully implemented, but no 
+   standard key-bindings are assigned yet, as a result, dialog-boxes cannot be 
+   moved, but most other windows will (use vi-style keys: j-k-l-h).
+ - CTRL-X can be used to switch between the two top-most posted windows.
+ - More intelligent Servers List management. Redundant or duplicate entries
+   will be removed when discovered. For example, entries that map to the same IP
+   number will be removed.
+ - Enabled flood-control in telnet logins and traffic. This area still
+   under-devolopped.
+ - Added -SOCK and -TEL to the EXEC command. You can now redirect output
+   to sockets, or people on your Telnet service.
+ - Added new SET variable, COMMAND_CHAR. Notice you'll no longer be able to
+   enter commands if you disable this, except for text to channels or DCC or via
+   the menu.
+ - Added new SET variable, AUTO_SHOW_OPTMENU. Option menu associated with a list   will automatically show-up if set.
+ - F2 will show list of possible actions instead of automatically issuing 
+   /WHOIS.
+ - CTRL-U now kills the whole line - suggested by Ananth.
+
+ ------------------
+  BUG FIXES:
+ ------------------
+ - The mysterious, unpredictable disappearance of the currently active 
+   window appears to be fixed.
+ - STICKY_MENU and STICKY_LISTS appear to be working correctly now.
+   You can stack the desktop with as many windows as you want and switch
+   between them however way you want.
+ - Temporarily-disabled menu choices are ``greyed'' correctly now. True
+   context-sensetivity!
+ - A specially nasty bug that was trashing the windows stack has been
+   traced and dealt with appropriately.
+ - Fixed cursor movements with CTRl-K (forward kill).
+ - Many little fixes and enhancments.
+
+__________________________
+ IRCIT 0.1
+

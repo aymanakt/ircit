@@ -1,0 +1,70 @@
+
+ Notes:
+  -*- When reporting bugs, basic information about your system can sometimes
+      aid in debugging. Include things like your kernel version and
+      distribution if known. Your ncurses version.
+      Please remember IRCIT doesn't run well under xterm.
+
+  -*- I will not look into curses-related problems if your ncurses is
+      not 4.0 or higher. I discovered that older ncurses implementations
+      (slackware 3.5 and debian 2.0 ship with these) will not display 
+      dialogboxes and msgboxes correctly. To find out about your existing
+      ncurses version, type the following command (exactly as shown) 
+      at the shell prompt:
+      grep "#define NCURSES_VERSION " /usr/include/ncurses.h | awk '{print $3}'
+
+  -*- If some entry is described as disabled, this usually means the actual
+      code, or an hook of some sort does exist for it, but it's been turned
+      off for this release.
+
+  -*- If your IRCIT crashes, try to send me the output of gdb on the generated
+      core file.
+      The easiest way to get that output is to type (after the crash):
+      gdb ircit core
+      then type:
+      where
+      Thats it! cut&paste, send it to me.
+
+
+
+
+ - I've just realized EXEC is broken (v0.3). Sorry.
+
+ - SET TMP_DIR isn't enabled, it defaults to /tmp. All your dcc get files
+   go there.
+
+ - DCC SEND doesn't stick well to the standard DCC protocol, current 
+   implementation _can_ send incomplete files. Fortunately this only happens
+   under exceptional conditions (unusually bad link to the Internet..)
+
+ - DCC REJECT isn't handled properly yet.
+
+ - DCC timeout is not enabled in this release.
+
+ - Telnet timeout is not enabled in this release.
+
+ - Flood control isn't enabled in this release. Not even when we output to 
+   server. This may result in having your connection closed if you apply some
+   mass-action: mass-op, mass-kick...I haven't tried it myself though.
+
+ - There's an occasional, hard-to-reproduce bug associated with the EXEC
+   command. I think this will go when I employ sensible thread support other
+   than the current one.
+
+ - Colors connot be saved from within IRCIT without saving the whole
+   set of preferences, which isn't exactly desirable thing. Save your
+   color settings manually until I fix this. This isn't really bug.
+
+ - WHO command isn't handled properly yet.
+
+ - Do expect stupid results or ambiguous messages.
+
+ - IRCIT isn't exactly xterm-friendly (or any xshell for that matter).
+   I have no serious plans for supporting it.
+
+
+
+ ______________________________
+  Your feedback is highly appreciated. Send your general observations to:
+  ircit@POBoxes.com.
+

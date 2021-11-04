@@ -1,0 +1,41 @@
+
+
+                           IRCIT (c), Version 0.3
+
+               Copyright 1998 by Ayman Akt. All rights reserved.
+ ---------------------------------------------------------------------------
+
+
+                           DISCLAIMER OF WARRANTY
+
+  THE COPYRIGHT HOLDER IS IN NO WAY LIABLE TO YOU FOR DAMAGES, INCLUDING,
+  BUT NOT LIMITED TO SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING 
+  OUT OF THE USE OR INABILITY TO USE THE PROGRAM.
+
+  THE PROGRAM IS PROVIDED  "AS IS"  WITHOUT WARRANTY OF ANY KIND,  EITHER
+  EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS
+  TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE
+  PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING,
+  REPAIR OR CORRECTION.
+
+
+MODIFICATIONS
+  You can modify IRCIT _only in the context of improving the original package_,
+  and that should be channeled back to the package maintainer of the time for 
+  inclusion at his discretion.
+  It's basically OK to quote parts of IRCIT in your program. You don't need
+  to give me credit for ideas or code borrowed from IRCIT.
+
+
+COPYING AND DISTRIBUTION
+  IRCIT can be freely copied or distributed provided that you include
+  this Copyright notice with each copy distributed or copied.
+
+
+
+  IRCIT also contains code covered under different Copying policies:
+
+   - ncurses (C) FSF
+   - fpl Copyright (C) 1992-1997 by FrexxWare Daniel.Stenberg@sth.frontec.se
+

@@ -1,0 +1,582 @@
+-----------------------------------------------------------------
+ IRCIT's Internal Functions                          IRCIT 0.3.1
+
+
+This is a quick reference to IRCIT's internal functions which can
+be  used  in  script  writing. All function prototypes follow the
+standard C convention.	Functions  are	listed	in  alphabetical
+order.
+
+Please	notice	this  file is only concerned with extention-func-
+tions specific to IRCIT; they are not part of the FPL programming
+language.  To  learn  about FPL's standard functions, consult the
+file named FPLuser.doc in the programming sub-directory (starting
+at  section:  61, line: 2813) - I might include them in this file
+in the future.
+
+
+
+
+NNAAMMEE
+       alias - alias definition
+
+SSYYNNOOPPSSIISS
+       iinntt aalliiaass ((cchhaarr _*nnaammee_, _c_h_a_r _*aalliiaass__ddeeff,,_c_h_a_r** hheellpp_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       aalliiaass registers your aliases and shortcuts with	IRCIT  so
+       that whenever _n_a_m_e is typed, your _a_l_i_a_s___d_e_f is executed.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+NNOOTTEESS
+       Since  FPL  lacks function pointers, if your _a_l_i_a_s___n_a_m_e is
+       actually a function name, pass its name in form of  string
+       and  as	complete  statement,  i.e.,  with the terminating
+       semi-colon `;'. Also remember to eexxppoorrtt your function.
+
+       You can include IRCIT macros in _a_l_i_a_s___d_e_f_.
+
+EEXXAAMMPPLLEE
+       /* function stays globally accessible */
+       export void dummy (string);
+
+       /*
+       ** eleminate the need to type `+' when adding new nick
+       ** in IRC notify
+       ** instead of writing /notify +ayman, you'd do /notify ayman
+       */
+       export void myNotify (string arg)
+       {
+	  if (!strlen(arg))
+	   {
+	    prog("NOTIFY", "");
+	   }
+	  else
+	  if
+	   {
+	    (arg[0]=='-')  prog("NOTIFY", arg);
+	   }
+	  else
+	   {
+	    prog("NOTIFY", "+"+arg);
+	   }
+       }
+
+       {
+	string aux="Hello, world";
+
+	 /* "dummy(s);" is what gets executed */
+	 alias ("test", "dummy(aux);");
+	 alias ("mnotify", "myNotify($#1);", "Add name to Notify List");
+
+	 /* another example...*/
+	 /* notice how inner `"' are escaped */
+	 alias ("date", "strftime(\" Today's: %a, %d %b '%y\n\");", "");
+
+	 exit;
+       }
+
+	void dummy (string s)
+	{
+	 say ("I see: %s\n", s);
+	}
+
+
+
+NNAAMMEE
+       assoc - associate event with user-defined action
+
+SSYYNNOOPPSSIISS
+       iinntt aassssoocc ((iinntt _e_v_e_n_t___i_d_x,, cchhaarr **_w_i_l_d_c_a_r_d___e_x_p,, cchhaarr **_a_c_t_i_o_n_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       aassssoocc  identifies  your	_a_c_t_i_o_n	with  the   event   index
+       _e_v_e_n_t___i_d_x (which represents standard IRCIT event) so  when
+       the event occurs, if _w_i_l_d_c_a_r_d___e_x_p  is  true,  _a_c_t_i_o_n  will
+       take place.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+NNOOTTEESS
+       If  you don't need to worry about conditions, _w_i_l_d_c_a_r_d___e_x_p
+       can be passed as an empty string, "", or "*".
+
+       To make full use of this functionality, you need	to  know
+       what info each event can pass to you.
+
+       Noise-control isn't implemented yet.
+
+EEXXAAMMPPLLEE
+	/*
+	** kick anyone who joins
+	*/
+	export	void ChanJoin (string nick, string from, string chan)
+	{
+	 say ("Ok, what we've got here...nick: %s, from: %s, chan: %s\n",
+	       nick, from, chan);
+	 say ("Let's KICK him!\n");
+
+	 toserver (sprintf("KICK %s %s :I'm tired of this world\n", chan, nick));
+
+	}  /**/
+
+
+	{
+	 /* event 1 occurs when the client is started */
+	 assoc (1, "say(\"hello, world\n\");");
+
+	 assoc (eventidx("CHANJOIN"), "*", "ChanJoin($#1, $#2, $#3);");
+
+	 exit;
+	}
+
+
+
+NNAAMMEE
+       bindkey - bind key with user-defined function
+
+SSYYNNOOPPSSIISS
+       iinntt bbiinnddkkeeyy ((iinntt _k_e_y,, cchhaarr **_f_p_l___e_x_p_r,, cchhaarr **_d_e_s_c_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       bbiinnddkkeeyy	associates _k_e_y with _f_p_l___e_x_p_r so that whenever _k_e_y
+       is pressed, the interpreter will	execute  _f_p_l___e_x_p_r.   You
+       can  pass  short	description  about  your binding through
+       _d_e_s_c, but that's optional.
+
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+NNOOTTEESS
+       The current implementation supports only	the  key-binding
+       of  Function Keys (F0-F22). Therefore the _k_e_y argument can
+       only take values between 264 and 286.
+
+       The use of IRCIT macros is  allowed,  but  doesn't  always
+       make  sense, specially if it's position-dependent argument
+       (e.g., $1 or $2^4, etc...).
+
+       Function Keys above F12 (with keyboards equipped with only
+       F1-F12)	are normally accessed by pressing SHIFT-Fn, e.g.,
+       to access F20, you'd press  SHIFT-F10.  F15  -->	SHIFT-F5
+       etc...
+
+EEXXAAMMPPLLEE
+	/* trivial attempt at having the string "hello, world" printed */
+	/* whenever F1 is pressed */
+	bindkey (265, "say(\"hello, world\");", "");
+
+	/* program F2 to print current date&time in red */
+	{
+	 string s="say(\"4%s\", strftime(\"%H:%M%p  %a, %d %b '%y\n\"));";
+
+	  bindkey (266, s, "Print Current Time");
+	}
+
+	/* program F3 to display split-users in current channel */
+	bindkey (267, "prog(\"CHANNELS\", \"-SPLIT\");", "Display Split-Users");
+
+
+SSEEEE AALLSSOO
+	      iinntt uunnbbiinnddkkeeyy ((iinntt _k_e_y_)_;
+
+
+
+NNAAMMEE
+       chanid - query channel id.
+
+SSYYNNOOPPSSIISS
+       iinntt cchhaanniidd ((cchhaarr _*_c_h_a_n_n_e_l_)_;
+
+DDEESSCCRRIIBBTTIIOONN
+       cchhaanniidd returns cchhaannnneell id. Each channel is assigned unique
+       id. If you pass empty string,  "",  for	_c_h_a_n_n_e_l,  current
+       channel will be assumed.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+
+
+NNAAMMEE
+       chusermodes - fetch usermodes in channel
+
+SSYYNNOOPPSSIISS
+       iinntt cchhuusseerrmmooddeess ((cchhaarr _*_c_h_a_n_n_e_l_, cchhaarr **_n_i_c_k_)_;
+
+DDEESSCCRRIIBBTTIIOONN
+       cchhuusseerrmmooddeess enables you to query the usermodes in cchhaannnneell..
+       If you pass empty string, "", for _c_h_a_n_n_e_l, current channel
+       will be assumed.
+
+RREETTUURRNN VVAALLUUEE
+       Bitwise OR of zero or more of the following values:
+
+       UUSSEERR__CCHHAANNOOPP
+	      User channel operator.
+
+       UUSSEERR__CCHHAANNVVOOIICCEE
+	      User has voice on in channel.
+
+       UUSSEERR__HHEERREE
+	      User here.
+
+       UUSSEERR__GGOONNEE
+	      User away.
+
+       UUSSEERR__IIRRCCOOPP
+	      User has IRC operator status.
+
+       --11     error.
+
+
+
+NNAAMMEE
+       eventidx - fetch index numbers corresponding to events
+
+SSYYNNOOPPSSIISS
+       iinntt eevveennttiiddxx ((cchhaarr _*_e_v_e_n_t___n_a_m_e_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       eevveennttiiddxx	returns  the integer representation of the event
+       name, _e_v_e_n_t___n_a_m_e.  This can be used as the 1st argument to
+       _a_s_s_o_c_(_).
+
+RREETTUURRNN VVAALLUUEE
+       -1 on error, positive integer otherwise.
+
+
+
+NNAAMMEE
+       getserv - get server from the internal Server List
+
+SSYYNNOOPPSSIISS
+       cchhaarr **ggeettsseerrvv ((iinntt _i_d_x_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       ggeettsseerrvv	uses  _i_d_x  as index into the internal Server List
+       and returns the server name corresponding to this index.
+
+RREETTUURRNN VVAALLUUEE
+       NUL string, "", on error. Server name otherwise.
+
+SSEEEE AALLSSOO
+	      iinntt sseerrvviiddxx ((cchhaarr _*_s_e_r_v___n_a_m_e_)_;
+
+
+NNAAMMEE
+       inw_clear - clear Input Window
+
+SSYYNNOOPPSSIISS
+       vvooiidd iinnww__cclleeaarr ((vvooiidd));;
+
+DDEESSCCRRIIBBTTIIOONN
+       iinnww__cclleeaarr clears whatever currently displayed in the Input
+       Window.
+
+RREETTUURRNN VVAALLUUEE
+       No return value.
+
+SSEEEE AALLSSOO
+	      vvooiidd iinnww__oouutt ((cchhaarr  **ssttrr));;
+
+
+
+NNAAMMEE
+       inw_complete  -	complete  whatever currently displayed in
+       Input Window
+
+SSYYNNOOPPSSIISS
+       vvooiidd iinnww__ccoommpplleettee ((vvooiidd));;
+
+DDEESSCCRRIIBBTTIIOONN
+       iinnww__ccoommpplleettee triggers the completion facility in IRCIT.
+
+RREETTUURRNN VVAALLUUEE
+       No return value.
+
+
+
+NNAAMMEE
+       inw_out - output string to Input Window
+
+SSYYNNOOPPSSIISS
+       vvooiidd iinnww__oouutt ((cchhaarr _*_s_t_r_)_;
+
+DDEESSCCRRIIBBTTIIOONN
+       iinnww__oouutt displays ssttrr in the Input Window as though it  was
+       entered through keyboard.
+
+RREETTUURRNN VVAALLUUEE
+       No return value.
+
+NNOOTTEESS
+       This  function  appends	output	to  whatever there in the
+       Input Window (as opposed to overwriting it).
+
+SSEEEE AALLSSOO
+	      vvooiidd iinnww__cclleeaarr ((vvooiidd));;
+
+
+NNAAMMEE
+       loadmenubar - activate/deactivate Menu system
+
+
+SSYYNNOOPPSSIISS
+       vvooiidd llooaaddmmeennuubbaarr ((iinntt _n_)_;
+       This function has incomplete implementation.
+
+
+
+NNAAMMEE
+       match - match wildcard pattern
+
+SSYYNNOOPPSSIISS
+       iinntt mmaattcchh ((cchhaarr _*_w_i_l_d_c_a_r_d_, cchhaarr **_s_t_r_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       mmaattcchh checks shell-type wildcard pattern _w_i_l_d_c_a_r_d  against
+       _s_t_r.
+
+RREETTUURRNN VVAALLUUEE
+       zero if no match found, 1 otherwise.
+
+NNOOTTEESS
+       mmaattcchh performs case-insesitive matching.
+
+       This function bahaves exactly like:
+	      ffnnmmaattcchh ((wwiillddccaarrdd,, ssttrr,, FFNNMM__CCAASSEEFFOOLLDD));;
+       in the STDC library.
+
+
+
+NNAAMMEE
+       parse - invoke IRCIT's main command parser
+
+SSYYNNOOPPSSIISS
+       vvooiidd ppaarrssee ((cchhaarr _*_t_e_x_t_, ......_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       ppaarrssee  will  pass  on  _t_e_x_t to the main command parser for
+       interpretation.	This is equivalent to  entering	text  in
+       the Input Window followed be `ENTER'.
+
+RREETTUURRNN VVAALLUUEE
+       No return value.
+
+NNOOTTEESS
+       This  function cannot (and is not meant to) decide whether
+       the tteexxtt is actually a command or plain text  for  current
+       channel. As a result, you'll need to use whatever the cur
+       rent value of the set-variable CCOOMMMMAANNDD__CCHHAARR is.
+
+       Contrasted with the function
+	      iinntt pprroogg ((cchhaarr _*_c_m_n_d_, cchhaarr **_a_r_g_s_)_;
+       ppaarrssee(()) can also	execute  user-defined	aliases,  whereas
+       pprroogg(())  can  only deal with IRCIT's standard built-in com
+       mands.
+
+       Used in conjunction with _i_n_p_u_t_w_i_n___o_u_t_(_), quite  entertain
+       ing effects can be achieved.
+
+BBUUGGSS
+       Inproper use of this function _can_ crash the client espa
+       cially when NULL is passed for %s, or the argument  corre
+       sponding to %s is omited altogether.
+
+EEXXAAMMPPLLEE
+	/* we want this to be parsed as command */
+	parse ("%sSERVER 1 6669", valueof("COMMAND_CHAR"));
+
+
+
+NNAAMMEE
+       prog - execute standard IRCIT command
+
+SSYYNNOOPPSSIISS
+       iinntt pprroogg ((cchhaarr _*_c_m_n_d_, cchhaarr **_a_r_g_s_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       pprroogg executes the standard IRCIT command, _c_m_n_d, and passes
+       _a_r_g_s as an argument to that command.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, 1 otherwise.
+
+NNOOTTEESS
+       _c_m_n_d has to be IRCIT command and not user-defined alias.
+
+EEXXAAMMPPLLEE
+       prog ("EXEC", "ls -l");
+
+
+
+NNAAMMEE
+       say - output to main window
+
+SSYYNNOOPPSSIISS
+       iinntt ssaayy ((cchhaarr **ffmmtt,, _._._._)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       ssaayy is IRCIT's answer to printf, plus loads of  IRCIT-spe
+       cific  formatting  tags	allowing  for  colored output and
+       graphical characters...
+
+RREETTUURRNN VVAALLUUEE
+       Count of characters output.
+
+NNOOTTEESS
+       Floating point formatting tags, %f  and	%g,  aren't  sup-
+       ported.
+
+       Watch  this space for more info on how to use the extended
+       capabilities of this function.
+
+
+
+NNAAMMEE
+       servidx - fetch server index from internal Servers List
+
+SSYYNNOOPPSSIISS
+       iinntt sseerrvviiddxx ((cchhaarr **sseerrvv__nnaammee_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       sseerrvviiddxx returns the index number in  the	internal  Server
+       List corresponding to _s_e_r_v___n_a_m_e.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+NNOOTTEESS
+       This   function	offers	the opposite	functionality  of
+       the _g_e_t_s_e_r_v _(_).
+
+SSEEEE AALLSSOO
+	      cchhaarr **ggeettsseerrvv ((iinntt _i_d_x_)_;
+
+
+
+NNAAMMEE
+       set - set IRCIT user preference
+
+SSYYNNOOPPSSIISS
+       iinntt sseett ((cchhaarr _*_p_r_e_f_, cchhaarr **_n_e_w___v_a_l_u_e_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       sseett changes the current value of	the  specified	_p_r_e_f  to
+       _n_e_w___v_a_l_u_e.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+SSEEEE AALLSSOO
+	      cchhaarr **vvaalluueeooff ((cchhaarr _*_p_r_e_f_)_;
+
+
+
+NNAAMMEE
+       strftime - print formatted date and time
+
+SSYYNNOOPPSSIISS
+       cchhaarr **ssttrrffttiimmee ((cchhaarr _*_f_m_t_)_;
+
+
+DDEESSCCRRIIPPTTIIOONN
+       ssttrrffttiimmee	uses  special formatting tags (conversion speci
+       fiers) in _f_m_t to output date and time.  It  has	the  same
+       formatting tags as the STDC library function ssttrrffttiimmee(()).
+
+RREETTUURRNN VVAALLUUEE
+       returns a string containing the formatted data.
+
+NNOOTTEESS
+       You  cannot  define  arbitrary  time  to be used with this
+       function - ttiimmee((NNUULLLL)) is used always.
+
+       Your string can have a maximum size of 300 bytes.
+
+SSEEEE AALLSSOO
+	      iinntt ssaayy ((cchhaarr _*_p_r_e_f_,......));;
+
+	      ssttrrffttiimmee(3)
+
+
+
+NNAAMMEE
+       toserver - send data to currently connected server
+
+SSYYNNOOPPSSIISS
+       iinntt ttoosseerrvveerr ((cchhaarr _*_s_t_r_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       ttoosseerrvveerr sends the raw IRC data contained in  _s_t_r  to  the
+       currently connected server.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+NNOOTTEESS
+       _s_t_r  is	expected  to  be raw IRC command of some sort. No
+       preprocessing is performed except for valid IRCIT  macros.
+       If   you	are  not  familiar  with  the	syntax,  consult
+       RFC(1459).
+
+
+
+NNAAMMEE
+       tosock - send data to socket
+
+SSYYNNOOPPSSIISS
+       iinntt ttoossoocckk ((iinntt _s_o_c_k_, cchhaarr **_s_t_r_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       ttoossoocckk sends _s_t_r to _s_o_c_k.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+
+NNAAMMEE
+       unbindkey - cancel previously bound key
+
+SSYYNNOOPPSSIISS
+       iinntt uunnbbiinnddkkeeyy ((iinntt _k_e_y_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       uunnbbiinnddkkeeyy removes any previous key-binding associated with
+       _k_e_y.
+
+RREETTUURRNN VVAALLUUEE
+       zero on error, positive integer otherwise.
+
+SSEEEE AALLSSOO
+	      iinntt bbiinnddkkeeyy ((iinntt _k_e_y,, cchhaarr **_f_p_l___e_x_p_r,, cchhaarr **_d_e_s_c_)_;
+
+
+
+NNAAMMEE
+       valueof - fetch preference definition
+
+SSYYNNOOPPSSIISS
+       cchhaarr **vvaalluueeooff ((cchhaarr _*_p_r_e_f_)_;
+
+DDEESSCCRRIIPPTTIIOONN
+       vvaalluueeooff	fetches	the  current  value  of user-preference,
+       _p_r_e_f.  User-preferences are set through valid entries  the
+       the config file, from within IRCIT through the SSEETT command
+       or from within a script using sseett(()).
+
+RREETTUURRNN VVAALLUUEE
+       returns the current definition of  the  preference.  Empty
+       string  indicates either the preference is currently unset
+       or error.
+
+SSEEEE AALLSSOO
+	      iinntt sseett ((cchhaarr _*_p_r_e_f_, cchhaarr **_n_e_w___v_a_l_u_e_)_;
+
+	      iinntt pprroogg ((cchhaarr _*_c_m_n_d_, cchhaarr **_a_r_g_s_)_;
+

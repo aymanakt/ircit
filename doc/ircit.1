@@ -1,0 +1,159 @@
+.TH IRCIT 1 "16 February 1998"
+.SH NAME
+IRCIT \- IRC client for the Information Terrorists.
+.SH SYNOPSIS
+.B ircit
+.RB [ \-h
+.RB ]
+.RB [ \-v
+.RB ]
+.RB [ \-r
+.RB [ ttyn
+.RB [ idx 
+.RB ]]]
+.RB [[ \-b
+.RB ]
+.RB [ \-p
+.RB port]
+.RB [ \-c
+.RB channel]
+.RB [ nickname
+.RB ]
+.RB [ server ]
+.RB ]
+.SH DESCRIPTION
+The
+.I IRCIT
+program is a full screen,   ncurses-based   interface to the  Internet Relay Chat.
+It supports most of the  functionality  normally expected in   the
+.I IRC
+enviroment, plus loads more.
+.I IRCIT 
+Ultimately aims  at  providing variety of secure and reliable internet-based 
+communication channels through the implementation of both standard and proprietary protocols and all those little tools which come in between!
+.SH OPTIONS
+Options are grouped into related subgroups. Options defined in a subgroup
+cannot be used with ones from other subgroups, they are simply ignored.
+For expample, [
+.BI \-v
+.RB ]
+is a standalone subgroup comprising only one option, you cannot compine 
+it with, say, [
+.BI -c 
+.RB channel] 
+which is defined in seperate subgroup. A subgroup is anything 
+enclosed between two square-brackets ``[...]''. Subgroups also
+mark optional components in the command line. This prologue was an
+elaboration attempt at an otherwise   obvious concept.
+.TP
+.BI \-h
+Supported command-line options.
+.TP
+.BI \-v
+Current version, also displays the compilation time.
+.TP
+.B \-r "[ttyn [idx]]"
+Reattach your detached client on ttyn, where n=0, 1, 2, ...
+If you have more than one client running at the same time, you might
+want to give the index number attached to that client, default is idx=0.
+.TP
+.B \-b 
+Detatch from terminal and go daemon mode after initialization.
+.TP
+.B \-p "port number"
+By default, 
+.I IRCIT
+uses port 6667 for it's connections, you can use this option to connect
+on other port. This will not change the pre-defined default
+port, if you want to set your client's default port to other value, 
+use the
+.I SET
+command with 
+.I DEFAULT_SERVER_PORT
+.TP
+.B \-c "channel"
+Upon successful connection to the desired server, join
+.B channel.
+.IP 
+You can define more than one channel if you seperate the indivisual
+channles with the delimiter ','.
+.TP
+.B nick
+The nickname by which you will be know in the IRC network. 
+This will not set your pre-defined default nick; use
+.B DEFAULT_NICK
+with the
+.B SET
+command to accomplish this.
+.SH "DETAILED DESCRIPTION"
+.SS "The User Interface:"
+.I IRCIT
+is ncurses-based program, and as such, it uses ANSI graphics for its drawing
+characters and colors. It features integrated windowing system
+with many GUI constructs like menus, dialog boxes, lists and nice
+visual color-editor.  Implemented luxuries include editing 
+capabilities, tables, command-completion and many little details. 
+To fully appreciate this pleasant enviroment,
+you will need a terminal capable of both, ANSI graphics and colors, e.g
+linux. 
+
+
+.SS "IRCIT Commands:"
+.I IRCIT
+formal commands all start with the slash character '/'. Almost every
+key on the keyboard has function of some sort, some are shortcuts to
+certain command sequesnces, others provide functionality only 
+accessable through the designated key.
+
+.I IRCIT
+command syntax is not compatible with IRCII's, although the actual
+naming tends to be largely the same. Roughly speaking, you can
+expect the same basic functionalty from 
+.I IRCIT
+commands as though they were issued on a standard IRCII client but
+without any IRCII-specific switches. 
+.I IRCIT 
+has it's own command syntax, which is fairly consistant and
+flexable.  No extensive on-line available, but the /HELP command
+can provide some basic syntax hilights.
+
+.SH FILES
+.I IRCIT 
+will survive quite well without any configuration files, nevertheless
+you might find it usefull to maintain a configuration file to hold 
+whatever
+.I IRCIT
+allows you to define. A file called
+.B ircit.conf
+will be first consulted in 
+.B $HOME/.ircit/
+if that fails, your current working directory will be searched instead.
+Please note, some functionality is likely to be lost if the default 
+working directory,
+.B $HOME/.ircit/
+, is not present.
+
+The file has straightforward syntax, and is logically devided into 
+.I SECTIONS
+into which, various user-defined preferences could be maintained. 
+You can selectivly save or rehash
+.I SECTIONS 
+of the file from within the client. 
+
+
+.SH "ENVIRONMENT VARIABLES"
+.I IRCIT
+doesn't require any special enviroment variables to be defiened other
+than the ones normally found in any sane system. But it understands the
+ones usually defined by IRCII clients users, but they don't have priority; they
+only consulted when the situation is desperate. 
+.SH "SEE ALSO"
+irc(1),
+ircd(8)
+.SH BUGS
+If you encounter bugs, you are encourged to contact the author
+with useable details.
+.SH AUTHOR
+.I IRCIT
+was written and is currently maintained by Ayman Akt (ayman@POBoxes.com).
+.\" end of man page

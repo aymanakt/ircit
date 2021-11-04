@@ -1,0 +1,90 @@
+
+This table describes the various hook supported by IRCIT. These hooks are meant
+to be used with the `assoc()' function.
+
+Some notes:
+ - argv[n] (n>=0), indicates the arguments that can be used in your code.
+ - +argv[n] indicates that this argument is msg body.
+
++----+------------+----+-----------------------------------------------------+
+|Idx | Name       |argc| Description                                         |
++----+------------+----+-----------------------------------------------------+
+|1   | STARTUP    |  - | Client initialized                                  |
++----+------------+----+-----------------------------------------------------+
+|2   | SERVERUP   |  2 | Connection to IRC server completed.                 |
+|    |            |    | argv[0]=server name                                 |
+|    |            |    | argv[1]=port number                                 |
++----+------------+----+-----------------------------------------------------+
+|3   | SERVERDOWN |  2 | Connection to IRC server ended.                     |
+|    |            |    | argv[0]=server name                                 |
+|    |            |    | argv[1]=port number                                 |
++----+------------+----+-----------------------------------------------------+
+|4   | ODDSRVCMND |  3 | Unrecognized server command.                        |
+|    |            |    | argv[0]=from                                        |
+|    |            |    | argv[1]=command (numeric or text)                   |
+|    |            |    | argv[2]=rest (if any)                               |
++----+------------+----+-----------------------------------------------------+
+|5   | CHANJOIN   |  1 | You joined channel.                                 |
+|    |            |    | argv[0]=channel                                     |
++----+------------+----+-----------------------------------------------------+
+|6   | CHANUSRJOIN|  3 | User joined channel.                                |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | argv[2]=channel                                     |
++----+------------+----+-----------------------------------------------------+
+|7   | CHANPART   |  1 | You left channel.                                   |
+|    |            |    | argv[0]=channel                                     |
++----+------------+----+-----------------------------------------------------+
+|8   | CHANUSRPART|  3 | User left channel                                   |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | argv[2]=channel                                     |
++----+------------+----+-----------------------------------------------------+
+|9   | CHANPRIVMSG|   4| Public msg to channel.                              |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | argv[2]=channel                                     |
+|    |            |    |+argv[3]=msg body                                    |
++----+------------+----+-----------------------------------------------------+
+|10  | USRPRIVMSG |   3| Private msg to you.                                 |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | +argv[2]=msg body                                    |
++----+------------+----+-----------------------------------------------------+
+|11  | TOPIC      |   4| Topic change on channel.                            |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | argv[2]=channel                                     |
+|    |            |    |+argv[3]=topic body                                  |
++----+------------+----+-----------------------------------------------------+
+|13  | INVITE     |   3| Recieved invitation to channel.                     |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | argv[2]=channel                                     |
++----+------------+----+-----------------------------------------------------+
+|14  | CHANCTCP   |   5| CTCP query to channel.                              |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | argv[2]=channel                                     |
+|    |            |    | argv[3]=CTCP tag                                    |
+|    |            |    |+argv[4]=msg body (if any)                           |
++----+------------+----+-----------------------------------------------------+
+|15  | USRCTCP    |   4| CTCP query to you.                                  |
+|    |            |    | argv[0]=nick                                        |
+|    |            |    | argv[1]=from (user@somewhere.com)                   |
+|    |            |    | argv[2]=CTCP tag                                    |
+|    |            |    |+argv[3]=msg body (if any)                           |
++----+------------+----+-----------------------------------------------------+
+|16  | CHANKICK   |   4| You have been kicked off channel                    |
+|    |            |    | argv[0]=initiator's nick                            |
+|    |            |    | argv[1]=initiator's host                            |
+|    |            |    | argv[2]=channel                                     |
+|    |            |    |+argv[3]=reason (if any)                             |
++----+------------+----+-----------------------------------------------------+
+|17  | CHANUSRKICK|   5| User has been kicked off channel                    |
+|    |            |    | argv[0]=initiator's nick                            |
+|    |            |    | argv[1]=initiator's host                            |
+|    |            |    | argv[2]=victim's nick                               |
+|    |            |    | argv[3]=channel                                     |
+|    |            |    |+argv[4]=reason (if any)                             |
+

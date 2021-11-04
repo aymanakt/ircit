@@ -1,0 +1,15 @@
+
+- Finish the Visual toolkit for scripting.
+- Finish the mouse support.
+- Define protocol for IRCIT<->IRCIT connections - initial draft already exists.
+- GUI still needs some work.
+- Muiltible-server connections.
+- Formalize the use of threads. Currently using an old interface to the clone()
+  system call.
+- Introduce encryption to traffic on the party-line and in IRCIT<->IRCIT
+  type of connections. Maybe use SSL.
+- Close loose ends.
+- Fix internal issues within the code. Remove redundant code.
+- Enhance documentation.
+- The usual bug-hunting business.
+

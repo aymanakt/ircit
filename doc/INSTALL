@@ -1,0 +1,78 @@
+
+----------------------
+ Notes for upgraders:
+----------------------
+
+       "make install" will not create the $HOME/.ircit directory if
+       it's already there, and no files will be updated.
+
+       You are strongly encourged to look at the ircit.fpl file
+       because it always contains new stuff and examples.
+
+       If Upgrading to 0.3.1, update your copy of ircit.conf and
+       ircit.fpl by copying the ones that come with package. You can
+       append your changes to the new files. This is necessary because
+       I changed the semantics of the Alias() function. If you've got
+       your own defined aliases, an extra parameter, of type string, is
+       necessary or your aliases will fail.
+       E.g. suppose you've defined the following:
+       alias ("Hello", "say(\"Hello, World\");");
+       then you'll have to modify it to read:
+       alias ("Hello", "say(\"Hello, World\");", "");
+       The last param is a help string, but it can be empty.
+
+
+---------------
+ INSTALLATION:
+---------------
+
+       No special magic; perform these simple operations:
+
+  ---------------------------------
+   If you are building from soure:
+  ---------------------------------
+          - configure
+            you can check the ./src/Makefile for possible tweakings
+            if you want.
+
+          - make
+            There should be no errors, ignore any warnings.
+            A binary in ./bin will be created.
+
+          - make install
+            Will create, if necessary, $HOME/.ircit directory to hold
+            ircit's config file and a standard script file, in which
+            common aliases are defined. The binary file is not copied anywhere;
+            copy it to your favourite binary dir. 
+            The script file is not needed, but it will be processed if
+            present. You can load your own files via /LOAD.
+            
+            You are strongly encourged to look at the ircit.fpl file
+            because it always contains new stuff and examples.
+
+          - Thats it!
+
+          - You may want to edit to config file to reflect your settings.
+            There's one SET variable, IPC_PATH, which you will need to set
+            for example: IPC_PATH /home/ayman/.ircit/ipc
+            replace ``/home/ayman'' with your $HOME.
+
+
+  ------------------------------------------
+   If you are running a pre-compiled binary:
+  ------------------------------------------
+        - copy the "bin/ircit" file to your favourite location.
+        - Create the $HOME/.ircit/ directory if not already present and
+          copy ircit.conf and ircit.fpl from the package's etc directory
+          to there. See the section above about "make install".
+
+
+        - Try not to ignore the accompanied documentation.
+
+        - You are now ready to run ircit.
+
+
+_______________________
+    Thank you,
+ ayman@POBoxes.com
+

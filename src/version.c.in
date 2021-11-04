@@ -1,0 +1,21 @@
+HOST="`hostname | sed -e 's/\([a-zA-Z0-9\-]*\).*/\1/'`"
+USER=`whoami`
+HIM=$USER@$HOST
+WHEN=`date | \
+ awk '{ \
+       if (NF==6) \
+          { print $1 " "  $2 " " $3 " "  $6 " at " $4 " " $5 } \
+       else \
+         { print $1 " "  $2 " " $3 " " $7 " at " $4 " " $5 " " $6 }}'`
+
+cat >version.c <<!END!
+/*
+** IRCIT Copyright (c) 1998 Ayman Akt
+**
+** This file is part of the IRCIT (c) source distribution.
+** See the COPYING file for terms of use and conditions.
+*/
+
+char *t_compiled="$WHEN";
+char *u_compiled="$HIM";
+!END!

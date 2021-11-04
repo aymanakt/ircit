@@ -1,0 +1,366 @@
+# Generated automatically from Makefile.in by configure.
+
+EFILE    = ircit
+INCLUDES = -I./include
+OBJDIR   = obj
+BINDIR   = ../bin
+DEST	 = $(HOME)/.ircit
+
+#CFLAGS  = -Wformat -finline-functions -O -D_REENTRANT
+# NOTE: If you use -On instead of plain -O, inline will not take place!
+CFLAGS   = $(INCLUDES) -g -O 
+
+VERSION  = @it_version@ 
+CC       = @CC@
+DEF	 = @DEF@
+DEFS	 = @DEFS@
+LIBS	 = @LIBS@
+STRIP	 = 
+
+FPL_VERSION = 14.11
+FPL_DIR     = ./fpl-14.11/src
+
+FPL_OBJS= $(FPL_DIR)/compile.o \
+          $(FPL_DIR)/frontend.o \
+          $(FPL_DIR)/hash.o \
+          $(FPL_DIR)/memory.o \
+          $(FPL_DIR)/numexpr.o \
+          $(FPL_DIR)/reference.o \
+          $(FPL_DIR)/scan.o \
+          $(FPL_DIR)/script.o \
+          $(FPL_DIR)/sprintf.o \
+          $(FPL_DIR)/sscanf.o \
+          $(FPL_DIR)/statement.o
+
+
+A        = $(OBJDIR)/alias.o
+B	 =
+C	 = $(OBJDIR)/chanrec.o  $(OBJDIR)/chanusers.o  $(OBJDIR)/colors.o \
+           $(OBJDIR)/configfile.o $(OBJDIR)/ctcp.o
+D	 = $(OBJDIR)/dcc.o      $(OBJDIR)/dialogbox.o  $(OBJDIR)/dnscache.o
+E	 = $(OBJDIR)/exec.o
+F	 = $(OBJDIR)/flood.o    $(OBJDIR)/fpl.o
+G	 =
+H	 = $(OBJDIR)/help.o     $(OBJDIR)/history.o
+I	 = $(OBJDIR)/ignore.o   $(OBJDIR)/input.o      $(OBJDIR)/intrins.o \
+           $(OBJDIR)/ircop.o
+J	 =
+K	 =
+L	 = $(OBJDIR)/lastlog.o  $(OBJDIR)/lstatus.o    $(OBJDIR)/list.o
+M 	 = $(OBJDIR)/main.o     $(OBJDIR)/match.o      $(OBJDIR)/menu.o \
+           $(OBJDIR)/misc.o     $(OBJDIR)/modes.o      $(OBJDIR)/mouse.o \
+           $(OBJDIR)/msgbox.o   $(OBJDIR)/mvsprintf.o
+N	 = $(OBJDIR)/net.o      $(OBJDIR)/notify.o
+O	 = $(OBJDIR)/output.o
+P	 = $(OBJDIR)/people.o   $(OBJDIR)/prefs.o      $(OBJDIR)/prefsfunc.o
+Q	 = $(OBJDIR)/queue.o
+R 	 = 
+S	 = $(OBJDIR)/scroll.o   $(OBJDIR)/serverio.o   $(OBJDIR)/serverr.o \
+           $(OBJDIR)/servers.o  $(OBJDIR)/socketio.o \
+           $(OBJDIR)/sockets.o  $(OBJDIR)/soundsrv.o   $(OBJDIR)/srvwindow.o \
+           $(OBJDIR)/str.o      $(OBJDIR)/stack.o
+T	 = $(OBJDIR)/telnet.o   $(OBJDIR)/telnetcmds.o $(OBJDIR)/terminal.o \
+           $(OBJDIR)/thread.o   $(OBJDIR)/timer.o
+U	 = $(OBJDIR)/u_status.o $(OBJDIR)/uDCC.o       $(OBJDIR)/updates.o \
+           $(OBJDIR)/useri.o
+V	 = $(OBJDIR)/version.o
+W	 = $(OBJDIR)/windows.o
+X	 =
+Y	 =
+Z	 =
+
+OBJECTS  = $(A) $(B) $(C) $(D) \
+           $(E) $(F) $(G) $(H) \
+           $(I) $(J) $(K) $(L) \
+           $(M) $(N) $(O) $(P) \
+           $(Q) $(R) $(S) $(T) \
+           $(U) $(V) $(W) $(X) \
+           $(Y) $(Z)
+
+
+_BC="[1\;1\;36m"
+_C="[1\;0\;36m"
+__C="[1\;7\;36m"
+_E="[0m"
+
+$(EFILE): fpl whatsup version $(OBJECTS)
+	@echo
+	@echo "${__C}                                                     ${_E}"
+	@echo " ${_BC}Linking object files...${_E}"
+	@echo "${__C}                                                     ${_E}"
+	@echo
+	$(CC)  $(FPL_OBJS) $(OBJECTS) -o ../bin/$(EFILE) $(LIBS) $(STRIP)
+
+#
+# NOTE:
+# The dependencies here are not right.
+#
+
+$(OBJDIR)/alias.o alias.o: alias.c \
+                           ./include/alias.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/alias.o alias.c
+
+$(OBJDIR)/chanrec.o chanrec.o: chanrec.c \
+                               ./include/chanrec.h \
+                               ./include/chanrec-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/chanrec.o chanrec.c
+
+$(OBJDIR)/chanusers.o chanusers.o: chanusers.c \
+                                   ./include/chanusers.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/chanusers.o chanusers.c
+
+$(OBJDIR)/colors.o colors.o: colors.c \
+                             ./include/colors.h \
+                             ./include/colorstab.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/colors.o colors.c
+
+$(OBJDIR)/configfile.o configfile.o: configfile.c \
+                                     ./include/configfile.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/configfile.o configfile.c
+
+$(OBJDIR)/ctcp.o ctcp.o: ctcp.c \
+                         ./include/ctcp.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/ctcp.o ctcp.c
+
+$(OBJDIR)/dcc.o dcc.o: dcc.c \
+                       ./include/dcc.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/dcc.o dcc.c
+
+$(OBJDIR)/dialogbox.o dialogbox.o: dialogbox.c \
+                       ./include/dialogbox.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/dialogbox.o dialogbox.c
+
+$(OBJDIR)/dnscache.o dnscache.o: dnscache.c \
+                                 ./include/dnscache.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/dnscache.o dnscache.c
+
+$(OBJDIR)/exec.o exec.o: exec.c \
+                         ./include/exec.h \
+                         ./include/thread.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/exec.o exec.c
+
+$(OBJDIR)/flood.o flood.o: flood.c \
+                           ./include/flood.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/flood.o flood.c
+
+$(OBJDIR)/fpl.o fpl.o: fpl.c \
+                      ./include/fpl.h \
+                      ./include/intrins.h \
+                      ./include/events.h \
+                      ./include/events-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/fpl.o fpl.c
+
+$(OBJDIR)/help.o help.o: help.c 
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/help.o help.c
+	
+$(OBJDIR)/history.o history.o: history.c \
+                               ./include/history.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/history.o history.c
+
+$(OBJDIR)/ignore.o ignore.o: ignore.c \
+                             ./include/ignore.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/ignore.o ignore.c
+
+$(OBJDIR)/input.o input.o: input.c \
+                           ./include/input.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/input.o input.c
+
+$(OBJDIR)/intrins.o intrins.o: intrins.c \
+                               ./include/intrins.h \
+                               ./include/events.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/intrins.o intrins.c
+
+$(OBJDIR)/ircop.o ircop.o: ircop.c \
+                           ./include/ircop-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/ircop.o ircop.c
+
+$(OBJDIR)/lastlog.o lastlog.o: lastlog.c \
+                               ./include/lastlog.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/lastlog.o lastlog.c
+
+$(OBJDIR)/list.o list.o: list.c \
+                         ./include/list.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/list.o list.c
+
+$(OBJDIR)/lstatus.o lstatus.o: lstatus.c \
+                               ./include/lstatus.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/lstatus.o lstatus.c
+
+$(OBJDIR)/main.o main.o: main.c \
+                         ./include/main.h  
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/main.o main.c
+
+$(OBJDIR)/match.o match.o: match.c
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/match.o match.c
+
+$(OBJDIR)/menu.o menu.o: menu.c \
+                         ./include/menu.h \
+                         ./include/menu-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/menu.o menu.c
+
+$(OBJDIR)/misc.o misc.o: misc.c \
+                         ./include/misc.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/misc.o misc.c
+
+$(OBJDIR)/modes.o modes.o: modes.c \
+                           ./include/modes.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/modes.o modes.c
+
+$(OBJDIR)/mouse.o mouse.o: mouse.c \
+                           ./include/mouse.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/mouse.o mouse.c
+
+$(OBJDIR)/msgbox.o msgbox.o: msgbox.c \
+                             ./include/msgbox.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/msgbox.o msgbox.c
+
+$(OBJDIR)/mvsprintf.o mvsprintf.o: mvsprintf.c \
+                                   ./include/mvsprintf.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/mvsprintf.o mvsprintf.c
+
+$(OBJDIR)/net.o net.o: net.c \
+                       ./include/net.h 
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/net.o net.c
+
+$(OBJDIR)/notify.o notify.o: notify.c \
+                             ./include/notify.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/notify.o notify.c
+
+$(OBJDIR)/output.o output.o: output.c \
+                             ./include/output.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/output.o output.c
+
+$(OBJDIR)/people.o people.o: people.c \
+                            ./include/people.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/people.o people.c
+
+$(OBJDIR)/prefs.o prefs.o: prefs.c \
+                           ./include/prefs.h \
+                           ./include/preferences.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/prefs.o prefs.c
+
+$(OBJDIR)/prefsfunc.o prefsfunc.o: prefsfunc.c \
+                                   ./include/preferences.h \
+                                   ./include/prefsfunc.h \
+                                   ./include/prefs.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/prefsfunc.o prefsfunc.c
+
+$(OBJDIR)/queue.o queue.o: queue.c \
+                           ./include/queue.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/queue.o queue.c
+
+$(OBJDIR)/scroll.o scroll.o: scroll.c \
+                             ./include/scroll.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/scroll.o scroll.c
+
+$(OBJDIR)/serverio.o serverio.o: serverio.c \
+                                 serverr.c useri.c \
+                                 ./include/serverio.h \
+                                 ./include/useri-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/serverio.o serverio.c
+
+$(OBJDIR)/serverr.o serverr.o: serverr.c \
+                               ./include/serverr.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/serverr.o serverr.c
+
+$(OBJDIR)/servers.o servers.o: servers.c \
+                               ./include/servers.h \
+                               ./include/servers-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/servers.o servers.c
+
+$(OBJDIR)/socketio.o socketio.o: socketio.c \
+                                 ./include/socketio.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/socketio.o socketio.c
+
+$(OBJDIR)/sockets.o sockets.o: sockets.c \
+                               ./include/sockets.h \
+                               ./include/sockets-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/sockets.o sockets.c
+
+$(OBJDIR)/soundsrv.o soundsrv.o: soundsrv.c \
+                                 ./include/soundsrv.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/soundsrv.o soundsrv.c
+
+$(OBJDIR)/srvwindow.o srvwindow.o: srvwindow.c \
+                                   ./include/srvwindow.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/srvwindow.o srvwindow.c
+
+$(OBJDIR)/stack.o stack.o: stack.c \
+                           ./include/stack.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/stack.o stack.c
+
+$(OBJDIR)/str.o str.o: str.c \
+                       ./include/str.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/str.o str.c
+
+$(OBJDIR)/telnet.o telnet.o: telnet.c telnetcmds.c \
+                             ./include/telnet.h \
+                             ./include/telnetcmds.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/telnet.o telnet.c
+
+$(OBJDIR)/telnetcmds.o telnetcmds.o: telnetcmds.c \
+                                     ./include/telnetcmds.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/telnetcmds.o telnetcmds.c
+
+$(OBJDIR)/terminal.o terminal.o: terminal.c \
+                                 ./include/terminal.h \
+                                 ./include/main.h \
+                                 ./include/headers.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/terminal.o terminal.c
+
+$(OBJDIR)/thread.o thread.o: thread.c
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/thread.o thread.c
+
+$(OBJDIR)/timer.o timer.o: timer.c  \
+                           ./include/timer.h \
+                           ./include/timer-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/timer.o timer.c
+
+$(OBJDIR)/u_status.o u_status.o: u_status.c \
+                                 ./include/u_status.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/u_status.o u_status.c
+
+$(OBJDIR)/uDCC.o uDCC.o: uDCC.c ./include/uDCC.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/uDCC.o uDCC.c
+
+$(OBJDIR)/updates.o updates.o: updates.c \
+                               ./include/updates.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/updates.o updates.c
+
+$(OBJDIR)/useri.o useri.o: useri.c \
+                           ./include/useri-data.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/useri.o useri.c
+
+$(OBJDIR)/version.o version.o: version.c
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/version.o version.c
+
+$(OBJDIR)/windows.o windows.o: windows.c \
+                               ./include/windows.h
+	$(CC) $(CFLAGS) $(DEFS) $(DEF) -c -o $(OBJDIR)/windows.o windows.c
+
+
+fpl:
+	@echo
+	@echo "${__C}                                                     ${_E}"
+	@echo " ${_BC}Checking Daniel's fpl v$(FPL_VERSION)...${_E}"
+	@echo "${__C}                                                     ${_E}"
+	@echo        
+	@cd $(FPL_DIR); make
+
+whatsup:
+	@echo
+	@echo "${__C}                                                     ${_E}"
+	@echo " ${_BC}`date '+ %A, %d %B %Y'`${_E}"
+	@echo " ${_BC}Generating object files for $(EFILE) $(VERSION)...${_E}"
+	@echo "${__C}                                                     ${_E}"
+	@echo
+
+version:
+	@chmod 755 version.c.in; ./version.c.in
+
+clean:
+	@rm -f version.c $(OBJDIR)/*.o core *.a *.so 
+	@rm -rf $(FPL_DIR)/*.o
+        
+install:
+	@cd ..; make install

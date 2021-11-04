@@ -1,0 +1,46 @@
+
+@SET_MAKE@
+
+DEST=$(HOME)/.ircit
+EFILE=ircit
+SRCDIR=src
+
+_BC="[1\;1\;36m"
+_C="[1\;0\;36m"
+__C="[1\;7\;36m"
+_E="[0m"
+
+all default ircit:
+	@cd $(SRCDIR); $(MAKE) $(EFILE)
+
+
+dist distclean cleanall: clean confclean
+
+clean:
+	@echo "${__C}                                                     ${_E}"
+	@echo " ${_BC}Cleaning stuff and things...${_E}"
+	@echo "${__C}                                                      ${_E}"
+	@cd $(SRCDIR); $(MAKE) clean
+	@rm -rf bin ./src/obj
+
+confclean:
+	@rm -rf Makefile ./autoconf/Makefile ./src/Makefile \
+                config.cache config.log config.status ./src/include/config.h
+                
+
+install:
+	@echo "${__C}                                                      ${_E}"
+	@echo " ${_BC}Installing IRCIT...${_E}"
+	@echo "${__C}                                                      ${_E}"
+	@echo 
+	@if test ! -d $(DEST); then \
+		echo "${_BC}creating directory $(DEST)...${_E}"; \
+		mkdir $(DEST); \
+	fi
+	@if test ! -r $(DEST)/ircit.conf; then \
+	cp ./etc/ircit.conf $(DEST)/; \
+	fi
+	@if test ! -r $(DEST)/ircit.fpl; then \
+	cp ./etc/ircit.fpl $(DEST)/; \
+	fi
+	@cp ./doc/ircit.1 /usr/local/man/man1

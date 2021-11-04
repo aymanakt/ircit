@@ -1,0 +1,1122 @@
+
+       This's  a  small collection of IRCIT commands I managed to
+       document. The sad fact about any beta-quality software  is
+       that  it's  typically poorly documented and things fail to
+       work as advertised. But as  time	 goes  a  pattern  should
+       emerge  and  a  standard	 outlook devolops. IRCIT is by no
+       means exception to this general observation.
+
+       In IRCIT, commands have consistent user interface in their
+       respective  categories, or at  least  they meant to be so.
+       Generally speaking, when manipulating a list of some sort,
+       say  Servers  List  or Ignore List, the actual addition or
+       removal of entries to/from the list is achived by  preced-
+       ing that entry with `+' or `-'. This's a category in which
+       most relevant commands have consistent syntax or	 will  be
+       made  to	 be  so. For example, the SSEERRVVEERRSS command manipu
+       lates the Servers List.	To add/remove to/from  the   list
+       you'd  put  together   something	  like	 this:
+	      //SSEERRVVEERRSS ++sseerrvveerr..ccoomm
+       or
+	      //SSEERRVVEERRSS --sseerrvveerr..ccoomm
+       for  addition  and  deletion, respectively.  To add/remove
+       to/from your Notify List,  you'd	 do  something	like:
+	      //NNOOTTIIFFYY  ++nniicckk
+       or
+	      _/_N_O_T_I_F_Y _-_n_i_c_k.
+
+       All  commands can be abbreviated non-ambiguously. That is,
+       you need only type the first unique letters of the command
+       to  get it identified. Of course, if you into typing, type
+       in the full command. For example, the //SSEERRVVEERRSS command can
+       be  abbreviated	to //SSEERR but not //SSEE  because  some  other
+       commands start with _S_E.	You  can  achieve command-comple
+       tion  by	 pressing  F1.
+
+       As  of v0.2, ircit comes with sophisticated alias facility
+       which  facilitates  the incorporation of your own commands
+       and short-cuts. You can program	complex aliases using  C-
+       like  syntax  and some run-time macros. When IRCIT starts,
+       it looks	 for  file  named ircit.fpl  in the config direc
+       tory  $HOME/.ircit,  but you can define other place if you
+       set _S_C_R_I_P_T___D_I_R.	 This  file  can  hold	your  custom-made
+       aliases.	 You  can  redifine  internal  commands	 with you
+       aliases.	 A facility  will  be  added  in  the  future  to
+       re-install the original command.	 Have  a look at program
+       ming.txt in the programming directory for more info.
+
+       Lots  of	 shortcuts available through the menu system  and
+       its friends.
+
+
+
+KKeeyybbooaarrdd--bboouunndd CCoommmmaannddss
+       To allow for sophisticated GUI interface, it was necessary
+       not to treat the keyboard as an absolute source of  input,
+       but  to	treat  it  as  a virtual entity with multiplexing
+       functionality.
+
+       Keyboard commands are overriden depending on  the  current
+       mode  of operation. In other words, a given key in a given
+       mode of operation may not produce  the  same  functionalty
+       when  pressed in another mode. Mode of operation is simply
+       a functionalty with it's own set of  input.  For	 example,
+       when  the   menu-bar   is   active,  you are in a menu-bar
+       operation mode, when the color-editor  is  posted,  or  if
+       you   are  filling   a form, you're in different operation
+       modes. When you are filling a form, the down-arrow key has
+       no  function whereas  when  you navigating through a list,
+       it will will scroll you down,   when in	default	 mode  of
+       operation,  it will display next entry in  your input his
+       tory. Left/Right arrow-keys will	 post  Option  Menu  when
+       pressed in a scrolling list whilst the same keys will walk
+       you through the current input line when pressed in default
+       mode.   This's  not as complicated in practice as it might
+       sound here in writing.	 When	you   start   IRCIT,   it
+       starts	in  the default operation mode, that is, input is
+       displayed in  the  input window and will go out to servers
+       or  people  etc....  You're returned to this mode when you
+       finish  with  other  modes.  I'll  try  to  describe  what
+       control-	 and  function-keys  can  do  in the default mode
+       because this what are going to  use most of the time.
+
+	_____________________	     
+CCoonnttrrooll--kkeeyyss::
+	---------------------
+
+       Mostly editting capabilities and other misc stuff...
+
+       CCTTRRLL--AA::
+	      Use  it to construct your own CTCP msgs.	You  need
+	      to know the format.
+
+       CCTTRRLL--BB::
+	      Bold output.
+
+       CCTTRRLL--CC::
+	      mIRC  colors. You need to know the format. (^Cnn,mm
+	      text ^C) (also can be used to  abort  the	 program:
+	      hit CTRL-C consecutively for three (3) times in two
+	      (2) seconds time to abort IRCIT)
+
+       CCTTRRLL--EE::
+	       Goto end of line.
+
+       CCTTRRLL--FF::
+	      Join channel to which you were last invited.
+
+       CCTTRRLL--GG::
+	      The infamous bell-character. beep.
+
+       CCTTRRLL--KK::
+	      forward-kill word.
+
+       CCTTRRLL--LL::
+	      Refresh screen.
+
+       CCTTRRLL--SS::
+	      Goto start of line.
+
+       CCTTRRLL--UU::
+	      Delete currnt line.
+
+       CCTTRRLL--VV::
+	      Reverse video output.
+
+       CCTTRRLL--WW::
+	      Delete current line backwards starting  at  current
+	      position.
+
+       CCTTRRLL--XX::
+	      Switch between channels.
+	      Switch between active windows when GUI is used.
+
+       CCTTRRLL____::
+	       Underline. Currently outputs cyan.
+
+       HHOOMMEE::  Goto start of line.
+
+       EENNDD::   Goto end of line.
+
+       UUPP--AARRRROOWW::
+	      Input-history up.
+
+       DDOOWWNN--AARRRROOWW::
+	      Input-history down.
+
+       LLEEFFTT--KKEEYY::
+	      Move cursor one position backward.
+
+       RRIIGGHHTT--KKEEYY::
+	      Mone cursor one position forward.
+
+       TTAABB::   Remembers MSG'ed or DCC'ed people.
+
+       EESSCC::   Removes  the top-most GUI element currently posted.
+	      This can be menu, menu box, list..etc
+
+	      I'd imagine most of  this	  is   already	 familiar
+	      to   you.	 Future	  expansion  is	 always	 expected
+	      in  this area  to	 accommodate  new  functionality.
+	      Binding facility could be considered in the future.
+
+       _______________________
+       FFuunnccttiioonn--kkeeyyss::
+	-----------------------
+
+       Function Keys are user-programmables. Some keys come  with
+       the  default  action pre-installed while others don't. You
+       can add your own key-bindings using the	BBIINNDDKKEEYY	 command,
+       or through some script using the bbiinnddkkeeyy(()) function.
+
+
+       FF11::    Command completion. Also can complete the arguments
+	      to HHEELLPP and _S_E_T.	Just  type  in	whatever  command
+	      you  want	 and  press F1 to get it completed--if at
+	      all possible.
+
+       FF22::    Choose operation to perform on the person from whom
+	      you last recieved MSG or CTCP request.
+
+
+       FF33::    Activates	 the  menu system. This also de-activates
+	      it.
+
+       FF44::    The Servers List.
+
+       FF55::    Toggle HOLD_MODE ON/OFF.
+
+
+      An   attempt  at	 human-readable	  describtion  of
+      some  of IRCIT's user-level commands, follows.
+
+      Some valid notes first:
+
+       --**--    If the first argument to the command  is	described
+	      as  [-TYPE]  or  [TYPE] then this marks an optional
+	      component and when omitted, the first entry in  the
+	      options list is considered the default.
+	       For example,
+
+	      IIRRCCIITT [[TTYYPPEE]] [[AADDDDRREESSSS||nn]] [[PPOORRTT]]
+
+	       TYPE: -IRC, -OTHR
+
+	Here,  if  [TYPE]  is  omitted,	 then -IRC is assumed the
+       default, that's why it's listed first. Most  of	the  com
+       mands follow this rule.
+
+
+
+
+CCOOMMMMAANNDD
+       ALIAS
+	Define or cancel aliases.
+
+
+SSYYNNTTAAXX
+	ALIAS [[-]ALIAS] [DEFINITION]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Alias  allows you to  add  new  commands or  shortcuts  to
+       perform whatever you want.
+
+       [DEFINITION] is a string of valid FPL statements. You  can
+       make full use of IRCIT's rich set of runtime macros.
+
+       You  are	 advised   to  consult	the  programming.txt file
+       for  more thorough describtion of how this works. To  view
+       currently  defined aliases, issue  this command withou any
+       arguments,   alternatively,  you	 can view  the alias def
+       inition	of  some  previously defined alias if you  supply
+       it's name.  To cancel an alias, precede it with `-'.
+
+
+EEXXAAMMPPLLEESS
+	      AALLIIAASS ss pprroogg((""sseerrvveerr"",, ""$$**""));;
+       Install new alias, s, which will act exactly  like  SSEERRVVEERR
+       command.
+
+	      AALLIIAASS ss
+       View the definition of alias s.
+
+	      AALLIIAASS --ss
+       Delete the alias s.
+
+CCOOMMMMAANNDD
+       AWAY
+	Manipulate AWAY status
+
+
+SSYYNNTTAAXX
+	AWAY [-SET|-UNSET] [MESSAGE]
+	AWAY [MESSAGE]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Used  without  arguments,   will	 cancel your AWAY status.
+       This can also be achieved  with	the  [-UNSET].	  If  you
+       supply a message along with the command, that message will
+       become your away notice as seen by others  when	they  try
+       /MSG   you.   [-SET]  will   use your  default away msg as
+       defined in your configuration file  (SET	  AWAY_MSG),  but
+       it   can	  also	 be   used   to supply different message:
+       //AAWWAAYY --SSEETT mmyy aawwaayy mmssgg ffoolllloowwss....
+
+CCOOMMMMAANNDD
+	BINDKEY
+	 Bind user-defined action with keyboard key
+
+
+SSYYNNTTAAXX
+       BINDKEY [[-]KEY] [FPL CODE]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       This command enables you to program certain keys	 in  your
+       keyboard	 so  that  whenever  a	programmed (bound) key is
+       pressed, your defined actions will take	place.	 Ideally,
+       you'd program keys in script because it allows for greater
+       control, but this functionality is equally accessible from
+       the command-line, too.
+
+       To view the currently bound keys, issue this command with
+       out any arguments.  To check  whether  a	 certain  key  is
+       bound  or  not,	issue  the  command with that [KEY] code.
+       Finally, to cancel a key-binding, precede that key's  code
+       with  -'.  [FPL	CODE]  can be any valid fpl code ranging
+       from one statement to complex functions. The use	 of  run-
+       time  IRCIT  macros  is	allowed,  but doesn't always make
+       sense.
+
+       IRCIT's concept of keyboard is more of a _virtual_ than of
+       a  one  real, unified entity. This was needed to allow for
+       sophisticated and intelligent GUI system.   As  a  result,
+       the  concept  of key-binding as commonly known in the UNIX
+       world cannot be easily  implemented.  As	 a  result,  only
+       small  set  of keyboard keys can be bound, namely, F1-F22.
+       Of course  a  more  elaborate  solution	is  planned,  but
+       deferred for now.
+
+
+EEXXAAMMPPLLEESS
+	      BBIINNDDKKEEYY FF22 pprroogg((""CCHHAANNNNEELLSS"",, ""--OOPP""));;
+       Programmed F2 to display chanops in current channel.
+
+	      BBIINNDDKKEEYY FF22
+       View the key-binding for F2
+
+	      BBIINNDDKKEEYY
+       View currently bound keys.
+
+	      BBIINNDDKKEEYY --FF22
+       Cancel key-binding for F2
+
+
+SSEEEE AALLSSOO
+       The  description	 for  the internal function bindkey() for
+       different perspective, and possibly some more examples.
+
+
+CCOOMMMMAANNDD
+	CHANNELS
+	 List active channels and users
+
+
+SSYYNNTTAAXX
+       CHANNELS [HOW] [#CHAN] [TYPE] [m-n]
+
+	HOW: -LST, -SCRL
+	TYPE: -ALL, -OP, -VOICE, -IRCOP, -SPLIT
+	TYPE: -LOG
+
+
+DDEESSCCRRIIPPTTIIOONN
+       List  current channels or users within channels. The list
+       ing  can	 have  two  forms:  interactive	 (scrolling  list
+       [-SCRL])	 or  dumb listing. The default being dumb [-LST].
+       Used without arguments  will  list  the	currently  active
+       channels.
+
+       The [-SCRL] switch:
+	Used without further arguments will have a scrolling list
+       with currently active channels to pop-up. If followed with
+       a channel name, a scrolling-list with that channel's users
+       will pop-up. Any other arguments are irrelavent.
+
+       The [-LST] switch:
+	This's	the  default,  so  it  can  be omitted. If you're
+       applying	 this	command	  to  the  current  channel,  the
+       [#CHAN]	can  be ommited. The dot character, `.', can also
+       be  used as  substitution for  the  current  channel.   By
+       default,	 the [-LST] will list all of the [#CHAN]  members
+       ([-ALL]).  If  you're  interested in subset of those  mem
+       bers, you can do so by specify one of the supported types,
+       e.g., people with chanop status.
+
+       The [-LOG] displays the Last Log settings for  the  speci
+       fied [#CHAN].
+
+       Finally, you can limit your listing in terms of the number
+       of records to be shown using the range specifier, [m-n].
+
+
+EEXXAAMMPPLLEESS
+	      CCHHAANNNNEELLSS ##aayymmaann
+       List all users in #ayman
+
+	      CCHHAANNNNEELLSS .. --oopp
+       List channel operators in current channel. You could  have
+       also written CCHHAANNNNEELLSS --oopp
+
+	      CCHHAANNNNEELLSS .. 2200--3300
+       List  users  in current channel starting at user number 20
+       till 30, that is 10 users.
+
+	      CCHHAANNNNEELLSS ##aayymmaann --oopp 1100--1155
+       List channel operators in the range 10-15, if no ops found
+       in that range, nothing gets displayed.
+
+
+CCOOMMMMAANNDD
+       CD
+	Change Directory
+
+SSYYNNTTAAXX
+       CD [DIR]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Changes	your  current  working	directory to [DIR]. If no
+       arguments were used, it reports	your  current  directory.
+       This  command  understands the tilde `~' which will trans
+       lates to your home-directory, that  is,	it  will  prepend
+       your  $HOME to whatever comes after the `~'. You can't use
+       it to indicate someone else's $HOME.
+
+
+EEXXAAMMPPLLEESS
+	      CCDD ~~
+       Change to your home-dir.
+
+	      CCDD ~~hhoommeewwoorrkk oorr CCDD ~~//hhoommeewwoorrkk
+       Change to sub-dir homework in your home-dir.
+
+	      CCDD  hhoommeewwoorrkk
+       Change to homework relative to current working  directory.
+
+	      CCDD //rroooott
+       Change to root. Absolute path.
+
+
+CCOOMMMMAANNDD
+       CTCP
+	Interface to the CTCP protocol.
+
+
+SSYYNNTTAAXX
+	CTCP <NICK,[NICK,...]> <CTCP TAG> [ARGUMENTS]
+
+	Supported Tags: PING, FINGER, CLIENTINFO, VERSION, SOURCE
+
+
+DDEESSCCRRIIPPTTIIOONN
+       This command, and the CTCP implementation in  general,  is
+       incomplete and messy, but most of your everyday CTCP stuff
+       is implemented.	The only new thing I added to  this  com
+       mand  is the ability to include more than one recipient to
+       your CTCP enquiry, otherwise it's largely the same  as  in
+       IRCII.
+
+
+CCOOMMMMAANNDD
+       DCC
+	User-level interface to the DCC protocol
+
+
+SSYYNNTTAAXX
+	DCC [TYPE] [NICK[,NICK,...]] [ARGS...]
+	DCC CLOSE [TYPE]  [NICK[,NICK,...]] [ARGS...]
+	DCC [-LST|-SCRL]
+
+	TYPE: CHAT, GET, SEND
+	ARGS: FILE[,FILE,..]|*
+
+
+DDEESSCCRRIIPPTTIIOONN
+       The DCC command is user-level compatible with IRCII's, but
+       we add our own extentions.  Used	 without  arguments  will
+       list current DCC connections.
+
+       DCC  CHAT:
+	You  can supply `,'-sperated list of people to both offer
+       or honour previously recieved CHAT. If  you  omit  [nick],
+       connection is attempted to the first pending CHAT offer to
+       you found in the list.  You can collectively hon- our  all
+       the pending CHAT offers to you using [-*.*].
+
+       DCC  GET:
+	You  can   get	several files from [nick] if you seperate
+       them properly. To get all the pending files   from  [NICK]
+       use   [*]  instead  of  [FILE,...]  To GET all the pending
+       files in the list use [*] without  [NICK].   If [NICK]  is
+       omitted,	  attempt  is  made  at GETting the first pending
+       file in the list.
+
+       DCC SEND:
+	One or more files can be sent to [NICK].
+
+       DCC CLOSE:
+	It should be obvious by now how to use CLOSE!
+
+
+EEXXAAMMPPLLEESS
+	      DDCCCC GGEETT aayymmaann **
+       GET all pending files sent by ayman.
+
+	      DDCCCC CCHHAATT aayymmaann,,lloollii,,bboobboo
+
+	      DDCCCC CCLLOOSSEE **
+	Close all types of DCC connections.
+
+	      DDCCCC CCLLOOSSEE SSEENNDD aayymmaann **
+       Cancel  all file offers to  ayman, connected or pending.
+
+	      DDCCCC CCLLOOSSEE CCHHAATT **
+       Close all CHAT type connections.
+
+
+CCOOMMMMAANNDD
+       DESCRIBE
+
+
+SSYYNNTTAAXX
+	DESCRIBE <NICK[,NICK,...]> <ACTION DESCRIPTION>
+	DESCRIBE <#CHAN[,#CHAN,...]> <ACTION DESCRIPTION>
+
+
+DDEECCRRIIBBTTIIOONN
+       Send some action-messages to people or channels.	 You  can
+       mix  people  with  channels  in the same list.
+
+
+EEXXAAMMPPLLEESS
+	      DDEESSCCRRIIBBEE bboobboo yyoouurr nniigghhttmmaarree
+
+	      DDEESSCCRRIIBBEE ##dduucckk qquuaacckk--qquuaacckk
+
+	      DDEESSCCRRIIBBEE iiddiioott,,##iiddiioottss  ggrreeeettss yyoouu
+
+
+
+CCOOMMMMAANNDD
+       EXEC
+	Execute commands from within IRCIT
+
+
+
+SSYYNNTTAAXX
+	EXEC [TYPE] [ARG] [CMND [ARG ARGS...]]
+
+       TYPE:   -WIN, -IN, -MSG, -NOTC, -CHAT, -CHAN, -SOCK, -TEL,
+       -CLOSE
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Execute commands with the ability of output-redirection.
+
+	WIN:
+	Send program's output to main window (default).
+	IN:
+	Send input to the running program.
+	MSG:
+	Redirect output in form of MSG to some nick.
+	NOTC:
+	Redirect output in form of NOTICE to some nick.
+	CHAT:
+	Redirect output to some CHAT connection.
+	CHAN:
+	Redirect output to named channel.
+	SOCK:
+	Redirect output to named socket.
+	TEL:
+	Redirect output to someon on your telnet service.
+	CLOSE:
+	Terminate running program (not implemented)
+
+       This  command has interesting internal design. It's imple
+       mented  using threads but since the thread  creation func
+       tion  in	 IRCIT	is  rather  primitive and don't allow for
+       robust implementation, some unexplainable things can happ
+       pen,  ultimately leading to graceless crash.  This  should
+       be rectified soon.
+
+
+EEXXAAMMPPLLEESS
+	      EEXXEECC --MMSSGG aayymmaann llss
+       Run the ``ls'' command and send output to ayman in form of
+       MSG.
+
+	      EEXXEECC ww
+       Run ``w'' and view output in the main window.
+
+
+CCOOMMMMAANNDD
+       FPL
+	Command-line interface to the interpreter.
+
+
+SSYYNNTTAAXX
+       FPL <FPL STATEMENTS>
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Through	this  command  you  can	 execute  fpl programs or
+       statements, do some quick evaluations, etc...
+
+
+CCOOMMMMAANNDD
+       HIDE
+	Detach your IRCIT session from the controlling terminal
+
+
+SSYYNNTTAAXX
+       HIDE [-T seconds]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Have  your  session run in the background pretty much like
+       deamon.	You can resume your session any time, provided it
+       is  still  running, by invoking the client with `-r' argu
+       ment.  You have the option of delayed  detachment  if  you
+       use the [-T] switch with some valid entry representing the
+       delay time in seconds.
+
+EEXXAAMMPPLLEESS
+	      HHIIDDEE
+       Prompt detachment.
+
+	      HHIIDDEE --TT 6600
+       Detach after 60 seconds.
+
+
+CCOOMMMMAANNDD
+       HISTORY
+	Manipulate your Input History entries.
+
+
+SSYYNNTTAAXX
+	HISTORY <TYPE> [<-|+>ENTRY]|[m-n]
+	HISTORY <TYPE> [WHAT [FILE [m-n]]]
+
+	TYPE: -ARR, -TAB
+	WHAT: -SAVE, -LOAD, -PLAY
+	ENTRY: LITERAL|#n|*
+
+
+DDEESSCCRRIIPPTTIIOONN
+       This command is concerned with your  Input  History,  any
+       thing entered in the lower input window. The Input History
+       is what you access through UP-DOWN arrow keys  (-ARR)  and
+       TAB key (-TAB).
+	To  view entries in either type, specify [-TYPE]. You can
+       limit your selection by defining a range, [m-n].
+	To add or remove entry, use '+' or '-' followed	 by  that
+       entry.
+
+       Quite different, but nontheless related, set of operations
+       can also be applied using this command; things like saving
+       your  History to file (-SAVE), or loading new entries into
+       your Input History from previously  saved  (or  edited  by
+       you) file (-LOAD). Finally you can load file and	 have its
+       entries treated as if they were entered through the  lower
+       window (-PLAY).
+	You  can  limit	 the entries you wish to operate on using
+       the range specifier, m-n. You'd	typically  want	 to  load
+       your  Input  History from some previous session upon start
+       up.
+	A related set-variable, _H_I_S_T_O_R_Y___D_I_R, can be used to spec
+       ify  the	 directory in which the [FILE] will be created or
+       searched for loading from. If this set-variable isn't set,
+       IRCIT's	 default   working   directory	 will	be   used
+       ($HOME/.ircit/). But you can  always  override  this  set-
+       variable,  set  or  not set, if [FILE] starts with '/', in
+       which case, IRCIT assumes you're supplying a directory  of
+       your  own.  If  the  [FILE] argument is omited altogether,
+       IRCIT will create/or load from, depending  on  [-WHAT],	a
+       file called history.ircit in _H_I_S_T_O_R_Y___D_I_R/ history.ircit if
+       set, or $HOME/history.ircit.
+
+       Yet another related set-variables, the AARRRROOWWSS__HHIISSTTOORRYY  and
+       TTAABB__HHIISSTTOORRYY  each  defines  the size of your history - how
+       many entries to keep.
+	You can disable the  history  facility	if  you	 set  the
+       appropriate  type  to zero. If you specify a size which is
+       smaller than the current one,  you'll  loose  any  entries
+       which  happen  to  be outside the new size. The purge will
+       affect entries at the begining of the list.
+
+..NNOOTTEE
+       There's hard-wired limit of 99 Input  History  entries  on
+       which  IRCIT  will  operate.  If you think this's somewhat
+       annoying or could jeopardize your  mission,  let	 me  know
+       about it.
+
+
+EEXXAAMMPPLLEESS
+	      HHIISSTTOORRYY --AARRRR
+       View _all_ entries in your UP-DOWN (arrows) Input History.
+
+	      HHIISSTTOORRYY --TTAABB 22--1100
+       View 8 entries in your TAB key (typically MSG or	 DCC-CHAT
+       peopel) starting at from entry #2 up to #10.
+
+	      HHIISSTTOORRYY --AARRRR --SSAAVVEE
+       Save  your Input History to a file. If HISTORY_DIR is set,
+       a file named history.ircit will be created in that  direc
+       tory.  Otherwise	 it  will  be  created in IRCIT's default
+       working directory, $HOME/.ircit/
+
+	      HHIISSTTOORRYY --TTAABB  --LLOOAADD  //hhoommee//aayymmaann//mmyy__ttaabb__hhiissttoorryy..ttxxtt
+	      11--2200
+       Load  history entries in your TAB key from specified file,
+       but we only interested in the  first  20	 entries  in  the
+       file.
+
+
+
+CCOOMMMMAANNDD
+       IGNORE
+	Manipulate Ignorance List
+
+
+SSYYNNTTAAXX
+	IGNORE [TYPE] [<-|+>NAME[,NAME,#n,...]]
+	IGNORE [TYPE] [<-|+>*]
+
+	TYPE: -ALL, -CTCP, -INV, -MSG, -NOTC, -TEL
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Handfull of ignore type are supported,  when  no	 type  is
+       specified,  -ALL	 is  assumed  which include the following
+       types:  CTCP  requests,	INVITE,	 MSG,  NOTICE and finally
+       TELNET connactions. The wildcard `*' can be used.
+
+       You can define GLOBAL ignore types which doesn't discrimi-
+       nate when it comes to  ignoring	people!	 For  example,	a
+       quick temporary way to shut down your telnet service is to
+       place global ignore on telnet connections.
+
+       You can add/remove specific ignore types	 for  entries  or
+       act  on	the whole list.	 When no arguments specified, the
+       whole list is displayed. You can also  limit  the  listing
+       according  to  [type].	You can escape the meaning of `*'
+       and `#' with `.
+
+
+EEXXAAMMPPLLEESS
+	      IIGGNNOORREE ++aayymmaann
+       Add ayman to the Ignorance List with the ALL mask.
+
+	      IIGGNNOORREE --MMSSGG --aayymmaann
+       ayman is still being ignored,  but  now	we  can	 see  his
+       msg's!
+
+	      IIGGNNOORREE --TTEELL ++
+       No  more	 telnet connections allowed to us. Notice how `*'
+       is being escaped to override the default meaning for it.
+
+	      IIGGNNOORREE --MMSSGG --**
+       Remove the -MSG ignore mask from all entries.
+
+	      IIGGNNOORREE --MMSSGG ++**
+       Put it back!
+
+	      IIGGNNOORREE  --CCTTCCPP  ++aayymmaann,,##33,,..RREE Depending  on  whether
+	      those entries already in, the CTCP ignore mask will
+	      be  either  added	 to  exsiting	entry	or  a new
+	      entry   will  be	created	 with  that   mask   for:
+	      ``ayman'',  entry	 number 3, and ``#3'' (notice how
+	      this being escaped)
+
+		     IIGGNNOORREE --IINNVV
+	      List all entries with the INVITE ignore mask.
+
+
+
+CCOOMMMMAANNDD
+       IRCIT
+	Connect to servers
+
+
+SSYYNNTTAAXX
+	IRCIT [TYPE] [ADDRESS|n] [PORT]
+
+	TYPE: -IRC, -OTHR
+
+DDEESSCCRRIIPPTTIIOONN
+       This command can be used to establish connections to arbi
+       trary  servers.	You will need to specify the type of con
+       nection so IRCIT can set things appropriately. The default
+       type is IRC, new types will be added later.  This  command
+       behaves	 similarly  to	SERVERS	 when  it  comes  to  the
+       reusability of the Servers List. When you  connect   using
+       [-OTHR],	 the  output  from  the	 connected server will be
+       indicated by its socket number:
+
+	[8] output from server here...
+
+	You  can  write	 to  that  server, or socket,  using  the
+       SMSG
+	command (socket message):
+	      //SSMMSSGG 88 nnoott bbaadd ssttuuffff......
+
+
+EEXXAAMMPPLLEESS
+	      IIRRCCIITT 22
+       IRC connect to entry number 2 in the Servers List.
+
+	      IIRRCCIITT --OOTTHHRR 44 66441122
+       Connect to the server associated with entry 4 on port 6412
+
+	      IIRRCCIITT --OOTTHHRR sseerrvveerr..ccoomm
+       Connect to server.com
+
+
+CCOOMMMMAANNDD
+       JOIN
+	Join channels in IRC
+
+
+SSYYNNTTAAXX
+       JOIN [CHANNEL,CHANNEL,...]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       If arguments omitted, joins the channel to which you  were
+       last  invited.  If  none,  the  current	channels  will be
+       listed, if any.	It can also be	used  to  switch  between
+       channels, CTRL-X does the same.
+
+
+
+CCOOMMMMAANNDD
+       LOAD
+	Load file into the interpreter for processing
+
+
+SSYYNNTTAAXX
+	LOAD <FILE>
+
+DDEESSCCRRIIPPTTIIOONN
+       Load the specified <FILE> into the  fpl	interpreter.  The
+       file is expected to contain valid fpl statements and oper
+       ators. If you don't include the path to the file, the  set
+       variable	 SSCCRRIIPPTT__DDIIRR  will   be	 used.	 If  not set, the
+       $HOME/.ircit/ will be used instead.
+
+
+
+CCOOMMMMAANNDD
+       LOOKUP
+	Look up interface addresses and Internet address  resolu
+       tion
+
+
+SSYYNNTTAAXX
+       LOOKUP [TYPE] <ADDR|IF>
+
+       TYPE: -IF, -ADDR
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Find  out  about TCP/IP enabled network interfaces on your
+       system, or do DNS look-up on some Internet  address.   The
+       default	is  [-IF]  which  stands for interface. What will
+       happen is that the interface being looked up, if valid and
+       has  IP	address	 that IP will be used in DCC connections.
+       But this behaviour will be reviewed later.  If you want to
+       see some Internet address resolved, use [-ADDR].
+
+       I originally written this command because I wasn't able to
+       fetch my machine's address (PPP link)  with  the	 standard
+       functions.  You may need to explicitly define your network
+       interface before doing some DCC stuff, specially if you on
+       PPP link. I don't know what I'm missing here, and I pretty
+       much believe that this is a glitch.
+
+       Please notice this command is not IPv6-aware.
+
+
+EEXXAAMMPPLLEESS
+	      LLOOOOKKUUPP pppppp00
+       Query  the  IP address of ppp0 on your  system,	DCC  con
+       netion will use this address.
+
+	      LLOOOOKKUUPP eetthh00
+
+	      LLOOOOKKUUPP --AADDDDRR ssuunnssiittee..uunncc..eedduu
+       Resolve this address.
+
+
+
+CCOOMMMMAANNDD
+       MASS
+	Perform mass-action on channels.
+
+
+SSYYNNTTAAXX
+	MASS [#CHAN] <[-|+]TYPE> [MASK]
+
+	TYPE: O (OP), B (BAN), K (KICK), V (VOICE)
+
+
+DDEESSCCRRIIPPTTIIOONN
+       This versatile command allows you to do actions	on  group
+       of  people,  possibly  the entire channel. If you you omit
+       [#CHAN],	 current  channel  is assumed. When  you  specify
+       either  [-]  or [+], you either `take' or `give' (wherever
+       that  makes sense, of course; +KICK doesn't make much of a
+       sense - neither -KICK does any). The default is [+].
+
+       When [MASK] is supplied, you can narrow your selection  to
+       only those who match the [MASK].
+
+
+EEXXAAMMPPLLEESS
+	      MMAASSSS ##aayymmaann --OO
+       The popular mass-deop command.
+
+	      MMAASSSS ++OO
+       The  less  popular mass-op applied to current channel. You
+       could have also written	`MASS o' since [+] is default.
+
+	      MMAASSSS KK aa!!**@@bb..cc
+       Kick everyone matching the `a!*@b.c' mask, applied to cur
+       rent channel.
+
+
+
+CCOOMMMMAANNDD
+       MSG
+	Send messages to people or channels
+
+
+SSYYNNTTAAXX
+	MSG NICK[,NICK,...] [TEXT]
+	MSG #CHAN[,NICK,&CHAN,...] [TEXT]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       You can mix channels with people. If channel is	specified
+       _all_  channel residents will get copy of [TEXT] (no flood
+       control implemented on this).
+
+
+
+CCOOMMMMAANNDD
+       NOTIFY
+	Manipulate Notify List
+
+
+SSYYNNTTAAXX
+	NOTIFY [TYPE] [<+|->ENTRY,ENTRY,...]
+
+	TYPE: -IRC, -UTMP
+	ENTRY: LITERAL|#n|*
+
+
+DDEESSCCRRIIPPTTIIOONN
+       With this command you can add, remove or	 display  entries
+       in  Notify  List.  IRCIT	 currently  supports two types of
+       Notify List: IRC-specific list  and  local-specific  list.
+       [TYPE] determines which list is to be manipulated with the
+       default being [-IRC]. Localhost list allows for you to  be
+       notified	 whenever certain people on your localhost log on
+       or off. You'll be notified only once  about  that  person,
+       that  is,  if  she logs on on more than one terminal, only
+       the first occurence will	 be  reported.	Furthermore,  she
+       won't  be reported as logged-off until she ``hangs up'' on
+       all her connected sessions.
+
+       You can specify entry number, [#n], instead of names.  You
+       can  also  specify  more	 than one entry if seperated with
+       `,'. Mass removal can be accomplished by	 specifying  [*],
+       which can be escaped with '.
+
+       With  IRC notify, you can automatically get WWHHOOIISS informa
+       tion if you set WWHHOOIISS__OONN__NNOOTTIIFFYY ON.
+
+
+EEXXAAMMPPLLEESS
+	      NNOOTTIIFFYY ++aayymmaann,,lloollii
+       Add ayman and loli to your IRC notify list.
+
+	      NNOOTTIIFFYY --UUTTMMPP ++rroooott,,aayymmaann
+       Get notified when root or ayman logs on on local host
+
+	      NNOOTTIIFFYY --aayymmaann,,##22
+       Remove ayman and entry number  2	 from  IRC  Notify  List.
+       Notice  this  may not result in what you originally had in
+       mind. Consider the following scenario:
+	Notify List has: ayman, ila, root and bobo
+	Now  considering  the  above  example,	#2  is	ila,  but
+       the above  command  will remove root instead of ila!  Why?
+       It's  because  of  the  way ``ayman,#2'' is parsed; by the
+       time  it reachs	#2,  #2	  in   the  list  now  represents
+       root,  and  ila	effectively  is	 #1!  The bottom line is,
+       engage your mind a bit before attempting things.
+
+CCOOMMMMAANNDD
+       SERVER
+	Connect to IRC servers or manipulate Servers List.
+
+
+SSYYNNTTAAXX
+	SERVER [<-|+>SERVER] [PORT]
+	SERVER [-#n]
+	SERVER [SERVER|N] [PORT]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       This  command operates in many different modes. Used with
+       out any arguments,  it  will  display  the  Servers  List.
+       Servers	List contains the servers stored in your configu
+       ration file plus any new ones defined using this	 command.
+       If  the	first argument starts with either `-' or `+', the
+       assumption is that you want to manipulate the list; add or
+       remove (editing mode will be added later).
+
+       To  add	or remove, prepend `+' or `-' to [SERVER]. If you
+       omit [PORT], the default port will be assumed. As a conve
+       nience,	when  removing, you can specify the server number
+       [n] as shown in the Servers List. When removing, you  have
+       to  tell	 the  [PORT]  or the command will fail (you don't
+       have to do this when [n] is used).
+
+       Another way to use this command is when connecting  to  an
+       IRC  server  where  it behaves like IRCII's `/server' com
+       mand,  but  considerably more intelligently.  If used this
+       way, if the  server  specified  is  not already	 in   the
+       list,  it will be added. As a convenience, you can specify
+       the server's number as  shown  in  Servers List	to   con
+       nect.   Another	nice feature of this mode is that you can
+       use [n] with new [PORT] and it will be  added if it's  not
+       already there.
+
+
+
+EEXXAAMMPPLLEESS
+	      SSEERRVVEERR   ++iirrcc..sseerrvveerr..ccoomm	66666688  Add   new	  server,
+	      irc.server.com, to the list and use 6668 when  con
+	      necting.If  you omit 6668, the default port will be
+	      used.
+
+		     SSEERRVVEERR --iirrcc..bbtt..nneett 66666677
+	      Remove irc.bt.net 6667 from the list.
+
+		     SSEERRVVEERR --##44
+	      Remove entry number 4 from the list.
+
+		     SSEERRVVEERR iirrcc..sstteeaalltthh..nneett
+	      IRC  connect  to	server irc.stealth.net using  the
+	      default  port.  (If the default port  differs  from
+	      this  server's entry  in the Servers  List,  a  new
+	      entry will be added with the default port)
+
+		     SSEERRVVEERRSS 33
+	      IRC  connect  to	server	entry  number  3  in  the
+	      Servers  List and use that entry's port.
+
+		     SSEERRVVEERRSS 11 66666699
+	      IRC  connect  to	server	entry  number  1  in  the
+	      Servers  List  but  use  port  6669.  This means if
+	      entry  1	has  different port  number, a new  entry
+	      will  be	added  with  the  same name but different
+	      port.
+
+
+
+CCOOMMMMAANNDD
+       SET
+	Set run-time prameters and preferences
+
+
+SSYYNNTTAAXX
+       SET [[-][PREFERENCE]] [VALUE]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       SET will change parameters which affect the  behaviour  of
+       IRCIT.  Used  without any arguments will print the current
+       settings.
+
+       [VALUE] can take any  of	 the  following	 different  data-
+       types:
+	       + Strings
+	       + Numerical values
+	       + Boolean values in form of ON/OFF
+
+       A [PREFERENCE] can  be  made  unset  by	prepending   that
+       [PREFERENCE] with [-].  Alternatively, if the [PREFERENCE]
+       in question is of type Boolean, you can unset it by speci
+       fying OFF as its [VALUE].  To see the current setting of a
+       [PREFERENCE], supply it as argument to SET.
+
+       Changes are lost if you quit the program. To make  changes
+       permenant save them in your configuration file.
+
+
+EEXXAAMMPPLLEESS
+	      SSEETT
+       List the current settings.
+
+	      SSEETT HHOOLLDD__MMOODDEE OONN
+       Set the value of HOLD_MODE to ON, that is, enable it.
+
+	      SSEETT --DDIISSCCAARRDD__MMIIRRCC
+
+       Disable	DISCARD_MIRC  (don't  perform mIRC color-transla-
+       tion). You could also have written SET  DISCARD_MIRC  OFF,
+       which  has  the	same effect (only works for boolean vari
+       ables)
+
+
+CCOOMMMMAANNDD
+       SETUID
+	Manipulate your UIDs
+
+
+SSYYNNTTAAXX
+	SETUID	[TYPE] <NAME|UID>
+
+	TYPE: -E (effective),  -R (real),
+	      -A (both -E and -R), -BACK
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Controversial command to play arround with your	UIDs.  It
+       really  makes  sense  when the set-user-ID flag is set and
+       the owner is root. Use your imagination. -BACK  takes  you
+       to the saved-user-id.
+
+
+
+CCOOMMMMAANNDD
+       SHOOT
+	Close connected sockets.
+
+
+SSYYNNTTAAXX
+	SHOOT <fd1,[fd2,fd3,...]>
+
+
+DDEESSCCRRIIPPTTIIOONN
+       If  you	not  sure how to properly terminate a connection,
+       look up its socket number (use SSOOCCKKEETTSS
+	command)  and  supply that  numer to _S_H_O_O_T.  You can give
+       it more than one socket if you seperate them with the  `,'
+       character.
+

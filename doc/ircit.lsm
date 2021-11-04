@@ -1,0 +1,28 @@
+Begin3
+Title:          IRCIT, Internet Relay Chat client 
+Version:        0.3.1
+Entered-date:   20SEP98
+Description:    IRCIT   (IRC   for   the  Information   Terrorists)  is  a
+                non-trivial,  full-featured,  text-mode,  macro-extensible
+                modern  IRC  client.   It  features  sophisticated,   high
+                quality GUI system and scripting language, syntax of which
+                is  99%  C-like.   The   basic   IRC  protocol is  mosltly
+                implemented plus  many   implementation-specific  details.
+                There is also  built-in  party-line, accessible via telnet
+                with some basic commands.  IRCIT allows you to access  any
+                text-based   server  and at the same time benefit from the
+                editting capabilities and history support.  IRCIT  can  be
+                detached   from your  terminal and run in  the  background
+                with  the  ability  to resume  your  session  later.  Plus
+                many  other interesting details.
+Keywords:       IRC, IRCIT, chat, party-line, DCC, fpl
+Author:         ayman@POBoxes.com (Ayman Akt)
+Maintained-by:  ayman@POBoxes.com (Ayman Akt)
+Primary-site:   http://www.alphalink.com.au/~aayman/
+Alternate-site: ftp://sunsite.unc.edu/pub/Linux/system/network/chat/irc
+                ftp://sunsite.unc.edu/pub/Linux/Incoming/
+                396 kb ircit-0.3.1.tgz
+                400 kb ircit-0.3.1-static.tgz
+Platforms:      Unix (Linux), GNUC, ncurses
+Copying-policy: Open (with some minor restrictions on modifications)
+End

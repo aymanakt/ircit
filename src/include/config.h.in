@@ -1,0 +1,19 @@
+
+#ifdef 0
+#define _HAVE_PTHREAD_H 0
+
+#define _HAVE_GPM_H 0
+#endif
+
+#define _HAVE_LOCALE_H 0
+
+#define _HAVE_RESIZETERM 0
+
+#define _HAVE_FPL_H 0
+
+#define LAST__LOG 1
+
+/* How many Function Keys to support */
+/*  F0-F22 see file funckeys.h */
+#define MAX_F_KEYS 23
+

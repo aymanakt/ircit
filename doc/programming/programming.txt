@@ -1,0 +1,418 @@
+
+---------------------------------------
+HHooww ttoo wwrriittee ssccrriippttss ffoorr yyoouurr IIRRCCIITT
+---------------------------------------
+
+
+
+IINNTTRROODDUUCCTTIIOONN
+       Scripting   a is	  new	feature	  to  IRCIT,   this means
+       compatibilty is not a  concern  for  me	at  this  current
+       stage.  Also,  how  ackward  the	 current  design is, will
+       stay an issue for a while   until   enough   feedback   is
+       recieved	  from	 people	 attempting   some   IRCIT   pro-
+       gramming	  either  out	of curiosity, or for some purpose
+       of their own.
+
+       It's no secret that the most frustrating part in	 learning
+       scripting  languages, or any programming language for that
+       matter, is mastering the syntax rules.  That's why I  went
+       to great lengths to ensure that I'll not waste my time (or
+       other people's time for that  matter)  when  it	comes  to
+       scripting  and  decided	on  something with C-like syntax.
+
+       IRCIT's	scripting  languag  of	choice	is fpl by  Daniel
+       Stenberg (dast@sth.fron-tec.se).	 fpl is a  small,  embed-
+       dable interpreted language with	99% C-like  syntax  rules
+       and operators. Your C knowldge well serve you  well  here;
+       you'll  spend  minimal effort in translating your logic to
+       the supported language.
+       The interface is not complete  yet  with	 regard	 to   the
+       various hooks, but you can construct sophisticated aliases
+       and other useful things as you'll see shortly.
+
+       IRCIT  provides	sophisticated  set of run-time macros for
+       aliases and function arguments  which  will  get	 expanded
+       prior  to  interfacing your fpl code with the interpreter.
+       This facility comes courtesy of IRCIT and not fpl.
+
+
+TTHHEE SSTTRRUUCCTTUURREE OOFF IIRRCCIITT SSCCRRIIPPTT
+       The   structure	of an IRCIT  script is	dectated  by  its
+       scriting language, fpl. So  in  effect,	 you'll	 need  to
+       consult	fpl's  own files (included in the IRCIT package).
+       But there are some general rules that  I'll  outline  here
+       that will get you going with less hassle.
+       fpl is interpreted language,  meaning  that  code  is exe-
+       cuted as	 it  is	 parsed	 by  the  interpreter.	Functions
+       defined	in  a file are local to that file unless they are
+       explicitly exported.  Quite  the	 opposite  to  C.    This
+       applies to  variables, too.  Typically,	the  script  will
+       assume the following structure:
+
+	       + Function and/or Variable Declerations.
+
+	       + The Body of the Script.
+
+	       + Function Definitions (if any declared).
+
+       As a general rule, you should export all your functions if
+       you  are writing something for IRCIT; anything that you'll
+       need to preserve across	various	 invocations,  should  be
+       exported. It's matter of specifying the fpl keyword eexxppoorrtt
+       in front of whatever you need to export.	 Think	of   this
+       keyword	as  a  SSttoorraaggee	CCllaassss as  it is	 known	in  the C
+       language.
+
+       OK, this how a typical script would look like:
+
+       ----------------- IRCIT script start here ------------------
+
+       /* Function declerations (prototypes) */
+       export type function_name (parameter type list);
+	...
+
+       /* The body of the script starts here. */
+       /* Start it with open brace for readability sake. */
+
+	{
+	  declerations
+	  statements
+	  ...
+
+	  /* end of script code */
+	  exit;
+	}
+
+	/* Function Definitions */
+	type function_name (parameter list)
+	{
+	  declerations
+	  statements
+	  ...
+	}
+
+	-------------- IRCIT script ends here -------------------
+
+       I don't think that I've impressed anyone with  this  since
+       this's how a typical C file will look like.
+       To  load a script into your session, use the LLOOAADD command.
+       Also, upon start-up, IRCIT  will	 automatically	load  the
+       file named _i_r_c_i_t_._f_p_l.
+
+       Now,  to	 actually  do  anything	 useful,  you'll  need to
+       invest some  time  exploring   what   the   various  IRCIT
+       built-in	 functions  can	 offer.	 IRCIT built-in functions
+       are functions added by IRCIT to extend the core capability
+       of  fpl. Think of fpl as the standard C system (along with
+       the standard libraries) and of IRCIT's built-in	functions
+       as  user-supplied  library.   the  built-in  functions are
+       detailed in the file named _i_n_t_e_r_n_a_l_f_u_n_c_s_._t_x_t, while  fpl's
+       are  in the file named _F_P_L_u_s_e_r_._d_o_c.  It's advised that you
+       go through them if you intrested in  script  writing.   If
+       you  already  know  C, then it's only matter of looking at
+       function descriptions.
+
+
+
+HHOOWW TTOO IINNTTEERRAACCTT WWIITTHH TTHHEE IINNTTEERRPPRREETTEERR
+       You need to know the points at which the interpreter  gets
+       to  execute  your  fpl  code.  This is controlled by IRCIT
+       through at least three mechanisms:
+
+	      + Alias Definitions
+
+	      + Events Association
+
+	      + Key Bindings
+
+       One  related  and important  IRCIT  functionality  is  the
+       _R_u_n_-_T_i_m_e	 _M_a_c_r_o_s.   These  macros will expand prior to the
+       invocation of the fpl interpreter and are meant to  supply
+       arguments  on  which   your   fpl  code	will operate. The
+       interpreter has no notion of theses macros,  and	 it  only
+       gets  to	 see  whatever those macros expand into. In other
+       words, they are not part of the fpl language and cannot be
+       used  directly  inside  your  code.  This  is important to
+       understand.  They ideally used in the context of the above
+       mentioned  procedures.  Read   further	for  more  infor-
+       mation.
+
+
+
+IIRRCCIITT RRUUNN--TTIIMMEE MMAACCRROOSS
+       IRCIT will expand certain macros before pumping	 whatever
+       they  enclosed in, into the interpreter.	 A macro is meant
+       to yield	 value of  supported type.   Currently	supported
+       types:	string	 and  integer.	in  other  words, a macro
+       expands into either string  or  number.	As  you'll   see,
+       intuitive and descriptive symbols were chosen to represent
+       the macro names.
+
+       This is the general form of macro definition:
+
+	      $$[[OOPPTTIIOONNAALL TTAAGG]][[VVAALLUUEE MMOODDIIFFIIEERR]]<<MMAACCRROO__NNAAMMEE>>
+
+
+       CURRENTLY DEFINED MACROS:
+
+       $$nn     where n>0, expands to the n-th arg.
+
+       $$nn~~    where n>0, expands to  n-th  arg,	 but  the   chars
+	      get expanded in reverse order.
+
+       $$nn>>mm   where  n>0 and m>0, expands from the n-th arg up to
+	      the m-th (n can be bigger than m).
+
+       $$nn^^mm   wheren n>0 and m>0, merges the n-th and m-th  args.
+
+       $$^^     expands to the first arg.
+
+       $$$$     expands to the last arg.
+
+       $$**     expands  to all of the args, i.e. the command line.
+
+       $$nn++    where n>0, expands starting from the n-th	 arg   up
+	      to the last one.
+
+       $$nn--    where  n>0,  expands from the first arg upto the n-
+	      th.
+
+       $${{SSHHEELLLL__VVAARRIIAABBLLEE}}
+	      expands to the value  of	the  supplied shell vari
+	      able.
+
+       $$<<IIRRCCIITT__VVAARRIIAABBLLEE>>
+	      expands	to   the  value of the supplied IRCIT set
+	      variable.
+
+       $$??     expands to the count of args (argc).
+
+       $$NN     expands to the current nick.
+
+       $$CC     expands to the current channel.
+
+       $$SS     expands to the current server.
+
+       $$tt     expands to unix time, time(NULL).
+
+       $$((mmaaccrroo__nnaammee))
+	      first  evaluates	the  inner  macro,   then  expand
+	      the result accordingly.
+
+       Optional	  Tag  is  '#' which have stringization effect on
+       the expanded macro (enclosed  between  two  '  "	 '  quote
+       chars).
+
+       Optional	  Value	 Modifier is '@' which returns the string
+       length instead of the string itself!
+
+       You can bypass, or escape the meaning of these  macros  by
+       the escape char '\'.
+
+
+
+AALLIIAASS DDEEFFIINNIITTIIOONNSS
+       Alias  Definition  is  a	 mechanism  through which one can
+       extend the basic user-level functionality  as  offered  by
+       the stock IRCIT program.	 It allows for customizations and
+       adding new commands and shortcuts.  This is something most
+       people  will  want to look into because it's impossible to
+       implement things in a way that will  make  everyone  happy
+       and productive citizen.
+       There are two ways through which one can define an alias:
+
+	      + From within a script
+
+	      + Using the AALLIIAASS command
+
+       Obviously,  a script will allow for greater functionality.
+       Aliases are typical places where one would  want	 to  make
+       use  of	the  Run-Time Macros.  Aliases can range from one
+       simple statement to several  inter-called  functions.  The
+       definition  of  an  alias should	 be written in	fpl.  Any
+       run-time macros will be	expanded  prior	 to  calling  the
+       interpreter.
+
+       Lets  explore  some examples utilizing the Alias facility.
+       The aliases will be defined through the	AALLIIAASS  command	-
+       with emphasis on the macro-expansion side of things.
+       It's  probably  good  idea to try them as you read through
+       this section.
+
+       Suppose you've defined the following alias:
+
+       /ALIAS hello say("Hello, world.\n");
+
+       hheelllloo will, automagically, become a new command;	 whenever
+       typed,  the satetment HHeelllloo,, wwoorrlldd..  will be echoed in the
+       Main Window. In IRCIT, commands (native or  alias-defined)
+       can  be	completed  using the completion facility and help
+       can be queried on them using the HHEELLPP command.
+       
+       The  definition	of  the alias starts after specifying the
+       alias name - in this instance, _h_e_l_l_o.
+       The alias definition should be valid fpl statement(s).
+
+       Example II:
+
+       /ALIAS hello  say("Hello! you've entered: $1\n");
+
+       This's quite primitive demonstration of how  the	 Run-Time
+       Macros  can  be used.  As you know, macro names start with
+       _$.  According to the above table, $$11 expands to the  first
+       supplied argument. Arguments are seperated by spaces.
+       Suppose	you  invoked  this  newly created command, _H_E_L_L_O,
+       this way:
+       /HELLO ayman
+       We just invoked the newly defined HHEELLLLOO command	with  the
+       argument _a_y_m_a_n.
+       IRCIT  will first expand $$11 to whatever the first argument
+       was, in this instance, _a_y_m_a_n.  Now, the	resultant  string
+       looks like: HHeelllloo!! yyoouu''vvee eenntteerreedd:: aayymmaann
+       and  this  is  what will be echoed in the Main Window.  If
+       you called it like this:
+       /HELLO ayman buddy
+       you'll still get the same result because	 you  only  asked
+       for the first argument, _$_1.
+
+       Consider	 the  following	 variations  - based on the input
+       string ``ayman buddy'':
+
+       say("Hello! You've entered: $2\n"); -> Hello! You've entered: buddy
+
+       say("Hello! You've entered: $1+\n"); -> Hello! You've entered: ayman buddy
+
+       say("Hello! You've entered: $1>2\n"); -> Hello! You've entered: ayman buddy
+
+       say("Hello! You've entered: $2>1\n"); -> Hello! You've entered: buddy ayman
+
+       say("Hello! You've entered: $1^2\n"); -> Hello! You've entered: aymanbuddy
+
+       say("Hello! You've entered: $1~\n"); -> Hello! You've entered: namya
+
+       say("Hello! You've entered: $*\n"); -> Hello! You've entered: ayman buddy
+
+       say("Hello! You've entered: $3\n"); -> Hello! You've entered:
+
+       say("Hello! You've entered: $?\n"); -> Hello! You've entered: 2
+
+
+       This example demonstrates the stringization effect.
+
+       /ALIAS hello say ("Hello! You've entered: %s\n", $#1);
+
+       Now, call it like this:
+
+       /HELLO ayman
+
+       After expansion:
+
+       say ("Hello! You've entered: %s\n", "ayman");
+
+
+       Probably the most powerful of all the macros is the $(...)
+       macro,  because	you   can   enclose   macros  within  it.
+       It's  very important  to	 understand  how  this	works  in
+       order to do something useful with it.
+
+       You can only specify one	 macro name,  the  innermost one,
+       and depending on how  many  nested  $()	you   have,   the
+       value   of   the	 currently expanding  macro  will  become
+       the  input  to  the  macro directly  above  it.	 This  is
+       very subtle point.
+
+       Example:
+
+       Define this alias:
+       /ALIAS hello say(" $($@2) \n");
+
+       Now call it with ``hello ay'' as input:
+       /HELLO hello ay
+
+       Lets see how this gets executed:
+
+       - The innermost macro will be expanded first:
+       $@2 -> 2	   (which is equivalent to strlen("ay"))
+
+       -  now  we have $(2) which is the same as $2 which in turn
+       translates to: ay
+
+
+       Another interesting example:
+
+       Define the following alias:
+       /ALIAS new say( $#($($(1^2))) );
+
+       Now call it this way:
+       /NEW {TE RM}
+
+       This's what will happen
+       - first, the innermost macro: 1^2 --> {TERM}
+       - this will be piped in as input to the level above it  in
+       the form: ${TERM}
+       -  according  to	 the  table,  ${SHELL_VARIABLE}	 will  be
+       expanded to the value  of  the  specified  SHELL_VARIABLE.
+       Resulting in: TERM --> linux
+       -  now  the last level, you want to stringize  whetever is
+       passed on to you --> "linux"
+       The final output is _l_i_n_u_x.  Of course, you could	 have  as
+       well  written:
+       /ALIAS test say( $#($1^2) );
+
+
+       $() doens't do anything usefull, neither $($($($()))) does
+       anything I know of!
+
+       To escape the meaning of of these macros, you  insert  '\'
+       after '$'.
+       For example, to escape $#($($(1^2))), you'd write:
+       /alias mq $\#($\($\(1^2)))
+       now type /mq blah blah...
+       it becomes $#($($(1^2))) --nothing gets expanded.
+       Another example:
+       /alias mq $\#<HOLD_MODE>	 --> #<HOLD_MODE>
+
+
+       I personally like the notion on	which  the  C language is
+       built: The programmer knows   what  he  is  doing  and  is
+       always  right. Which is,	 in a sense,  free invitation for
+       ignorant	 people	 to  create their  very	  own	``recipes
+       for  disasters''	 the  same thing applies here, with small
+       difference.  C  doesn't	provide run-time  checking;   you
+       can,   at   any	time,  overrun	your array etc..., but in
+       IRCIT your chances to crash the programm because	 of  such
+       common  errors  are  meant  to  be  minimum  and	 you  are
+       encourged to report it if one  of  your	lousy scripts  or
+       aliases managed to crash the program. Remember, the golden
+       rule remains  in	 effect:  You	put   garbage,	 you  get
+       garbage.
+
+
+
+EEVVEENNTT AASSSSOOCCIIAATTIIOONN
+       This  functionalty  allows  you	to  override  the default
+       action IRCIT'd take in response to certain events. This is
+       central to script writing and is very similar to	 the con
+       cept of signals in Oprating Systems  where  you	establish
+       signal  handler	(hook)	for  the desired event and the OS
+       will execute your code when that	 event	comes  about.  In
+       IRCIT  it's  called  Event  Association.	 Typically, you'd
+       write a function and associate that function  (code)  with
+       an  event  of  interest	to you. Some events provide basic
+       information related  to	the  actual  situation	and  this
+       information  can	 be  passed  to	 your function/code. It's
+       important to know what information each event can  provide
+       in  order  to  do some sensible stuff. For example, when a
+       connection to IRC server completes, IRCIT checks if anyone
+       interested  in this event, and if so, will pass the server
+       name and port to	 whoever  associated  a	 code  with  this
+       event.	It's  up to you to make use of this info.   IRCIT
+       supplies internal function for this purpose:
+	      iinntt aassssoocc ((iinntt _e_v_e_n_t___i_d_x,, cchhaarr **_w_i_l_d_c_a_r_d___e_x_p,,  cchhaarr
+	      **_a_c_t_i_o_n_)_;
+       Think  of  this	as ssiiggnnaall(()) in C, or if you familiar with
+       ircII, ON.  Each event has a code number, or  event  index
+       (think  signal  number).	  These indices are listed seper
+       ately elsewher in file events.txt.
+
