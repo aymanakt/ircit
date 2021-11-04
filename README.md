@@ -5,7 +5,7 @@
 
 
 
-       IIRRCCIITT is a new, non-derivative IRC client catering for the
+       IRCIT is a new, non-derivative IRC client catering for the
        needs  of  the  non-average user.  It  currently	 runs  on
        Linux-based  systems   and   will   not	 compile  without
        modifications by non-GNUC-compatible compilers.
@@ -23,7 +23,7 @@
        of work in progress.
 
 
-WWHHAATT''SS NNEEWW IINN TTHHIISS RREELLEEAASSEE
+WHAT'S NEW IN THIS RELEASE
        It's been a while since I released new revisions; in fact,
        it wasn't my intention at all to release any revisions  in
        the  0.3	 series,  but  since  some major redesign work is
@@ -53,7 +53,7 @@ WWHHAATT''SS NNEEWW IINN TTHHIISS RREELLEEAASSEE
        directory.
 
 
-FFIINNAALLEE
+FINALE
        Please  skim through ircit.help, it  has	 some  documented
        commands and it will help you understand the basic  syntax
        of  IRCIT,  it will  particularly help you appreciate  the
