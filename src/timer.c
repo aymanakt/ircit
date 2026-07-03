@@ -381,7 +381,7 @@
 
    lptr=ListfromArray (timers, sizeof(struct Timer), nTimers-1);
    scrptr->nEntries=lptr->nEntries;
-   (List *)scrptr->list=lptr;
+   scrptr->list=lptr;
    ((ScrollingList *)(scrptr->opt_menu))->parent=scrptr;
 
    LoadScrollingList (&tmr_list);
@@ -402,7 +402,7 @@
  void ScrollingTimersEntries (ScrollingList *sptr)
 
  {
-  register j=0;
+  register int j=0;
   int maxy,
       last;
   char s[sptr->width];

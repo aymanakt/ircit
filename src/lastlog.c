@@ -13,6 +13,7 @@
 
 #include <main.h>
 #include <terminal.h>
+#include <output.h>
 #include <updates.h>
 #include <list.h>
 #include <lastlog.h>

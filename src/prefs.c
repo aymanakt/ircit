@@ -294,7 +294,7 @@
 
          if ((ptr->entry.value)&&(arethesame(ptr->entry.value, nvalue)))
           {
-           return;
+           return 0;
           }
 
         aux=ptr->entry.value;

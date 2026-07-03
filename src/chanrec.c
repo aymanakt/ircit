@@ -18,6 +18,9 @@
 #include <scroll.h>
 #include <lastlog.h>
 #include <chanrec.h>
+#include <chanusers.h>
+#include <windows.h>
+#include <useri.h>
 #include <match.h>
 #include <serverio.h>
 #include <updates.h>
@@ -321,8 +324,8 @@
 
    mstrncpy (bptr->mask, mask, MAXHOSTLEN);
 
-   (Ban *)lptr->whatever=(Ban *)bptr;
-   (ListEntry *)bptr->link=(ListEntry *)lptr;
+   lptr->whatever=bptr;
+   bptr->link=lptr;
 
    return (Ban *)bptr;
 
@@ -361,7 +364,7 @@
                       {
                        say("%$% You don't have that many Ban entries.\n", INFO);
 
-                       return;
+                       return 0;
                       }
 
                   lptr=ptr->head;
@@ -370,7 +373,7 @@
                        {
                          if (++n==i)
                             {
-                             (Ban *)bptr=(Ban *)lptr->whatever;
+                             bptr=lptr->whatever;
 
                              memset (bptr, 0, sizeof(Ban));
                              free (bptr);
@@ -398,7 +401,7 @@
                       {
                         if (!strcasecmp(mask, MASK(lptr)))
                            {
-                            (Ban *)bptr=(Ban *)lptr->whatever;
+                            bptr=lptr->whatever;
 
                             memset (bptr, 0, sizeof(Ban));
                             free (bptr);
@@ -432,7 +435,7 @@
 
                          if (match(MASK(lptr), mask))
                             {
-                             (Ban *)bptr=(Ban *)lptr->whatever;
+                             bptr=lptr->whatever;
 
                              i++;
                              aux=lptr->next;
@@ -457,7 +460,7 @@
                          {
                           i++;
                           aux=lptr->next;
-                          (Ban *)bptr=(Ban *)lptr->whatever;
+                          bptr=lptr->whatever;
                           free (bptr);
                           free (lptr);
                           lptr=aux;
@@ -497,7 +500,7 @@
     {
      i++;
      aux=eptr->next;
-     (Ban *)bptr=(Ban *)eptr->whatever;
+     bptr=eptr->whatever;
      free (bptr);
      free (eptr);
      eptr=aux;
@@ -525,7 +528,7 @@
 
     for ( ; eptr!=NULL; eptr=eptr->next)
      {
-      (Ban *)bptr=(Ban *)eptr->whatever;
+      bptr=eptr->whatever;
 
        if (bptr->flag&BAN_ENFORCE)
         {
@@ -570,7 +573,7 @@
     for ( ; lptr!=NULL; lptr=lptr->next)
      {
       i++;
-      (Ban *)bptr=(Ban *)lptr->whatever;
+      bptr=lptr->whatever;
 
       say ("%d: ban: %s, by: %s\n", i, bptr->mask, bptr->who);
      }
@@ -1015,7 +1018,7 @@
        if (ChannelsTableEmpty(ptr))
         {
          ResetChannelTable (EVERYTHING);
-         (Channel *)cht_ptr->c_chptr=(Channel *)NULL;
+         cht_ptr->c_chptr=NULL;
 
          return;
         } 
@@ -1038,7 +1041,7 @@
          UpdateServerTable (SERV_UMODE, USER_CHANOP, NULL, '-');
         }
 
-      (Channel *)cht_ptr->c_chptr=(Channel *)chptr;
+      cht_ptr->c_chptr=chptr;
      }
     else 
      {
@@ -1060,7 +1063,7 @@
             UpdateServerTable (SERV_UMODE, USER_CHANOP, NULL, '-');
            }
 
-         (Channel *)cht_ptr->c_chptr=(Channel *)chptr;
+         cht_ptr->c_chptr=chptr;
         }
      }
 
@@ -1143,7 +1146,7 @@
    ((ScrollingList *)(scrptr->opt_menu))->parent=scrptr;
 
    scrptr->nEntries=ptr->nEntries;
-   (ChannelsTable *)scrptr->list=ptr;
+   scrptr->list=ptr;
 
    ch_list.lock=&ptr->glock;
 
@@ -1195,7 +1198,7 @@
                  break;
 
             case 1:
-                 ScrollingChanusers (chptr);
+                 ScrollingChanusers (chptr, 0);
                  break;
       
             case 2:
@@ -1250,7 +1253,7 @@
        if (j==sptr->hilited)
         {
          _wattron (w, A_REVERSE);
-         (Channel *)sptr->c_item=(Channel *)chptr;
+         sptr->c_item=chptr;
         }
 
        if (iscurchan(chptr->channel))

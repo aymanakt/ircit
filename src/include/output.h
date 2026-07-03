@@ -100,6 +100,6 @@ MODULEID("$Id: output.h,v 1.6 1998/03/16 10:09:38 ayman Beta $")
 
  void InitHoldQueue (void);
  int AddtoHold (chtype *, int);
- int dequeuehold (void);
+ void dequeuehold (void);
  void F5 (void);
 

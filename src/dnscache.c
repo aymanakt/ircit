@@ -80,8 +80,8 @@
    strcpy (dnscptr->dns, dns);
    strcpy (dnscptr->dotted, dotted);
 
-   (DNSCacheEntry *)eptr->whatever=dnscptr;
-   (ListEntry *)dnscptr->link=eptr;
+   eptr->whatever=dnscptr;
+   dnscptr->link=eptr;
 
    return (DNSCacheEntry *)dnscptr;
 

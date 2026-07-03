@@ -51,8 +51,8 @@
 
    _InitChannelsTable (&srvwptr->channels);
 
-   (ServerWindow *)eptr->whatever=srvwptr;
-   (dListEntry *)srvwptr->link=eptr;
+   eptr->whatever=srvwptr;
+   srvwptr->link=eptr;
 
    return (ServerWindow *)srvwptr;
 
@@ -77,7 +77,7 @@
 
    //MmainWin=srvwptr->w1;
    MainWin=srvwptr->w;
-   (WINDOW *)mt_ptr->c_window=MainWin;
+   mt_ptr->c_window=MainWin;
    c_srvwin=srvwptr;
 
    channels=&srvwptr->channels;
