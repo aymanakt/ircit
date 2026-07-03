@@ -575,7 +575,7 @@
     if (!strcmp(ctcp, "PING"))
      {
       int t;
-      extern uping_replay;
+      extern time_t uping_replay;
       extern TimersTable *const tt_ptr;
 
        t=time(NULL)-uping_replay;

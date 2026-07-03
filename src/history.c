@@ -16,7 +16,7 @@
 #include <prefs.h>
 #include <history.h>
 
- static int ClearHistoryEntry (InputHistory *, int, void *);
+ static void ClearHistoryEntry (InputHistory *, int, void *);
 
  MODULEID("$Id: history.c,v 1.6 1998/06/12 07:33:09 ayman Beta $");
 
@@ -191,12 +191,12 @@
       return 0;
      }
 
-   return 1;
+   return 0;
 
  }  /**/
 
 
- static __inline__ int ClearHistoryEntry (InputHistory *ptr, int how, void *v)
+ static __inline__ void ClearHistoryEntry (InputHistory *ptr, int how, void *v)
 
  {
     if (ptr->nLines==0)
@@ -226,7 +226,7 @@
 
             say ("%$% Cleared %d entr%s.\n", INFO, i, i>1?"ies":"y");
 
-            return i;
+            return;
           }
 
      case NAME:
@@ -242,13 +242,13 @@
                 {
                  RemovefromInputHistory (ptr, iptr);
 
-                 return 1;
+                 return;
                 }
               }
 
             say ("%$% Specified entry not found.\n", MILD);
 
-            return 0;
+            return;
           }
 
      case NUMBER:
@@ -263,7 +263,7 @@
               {
                say ("%$% You don't have that many entries.\n", MILD);
 
-               return 0;
+               return;
               }
 
              for ( ; iptr!=NULL; iptr=iptr->next)
@@ -272,11 +272,11 @@
                  {
                   RemovefromInputHistory (ptr, iptr);
 
-                  return 1;
+                  return;
                  }
               }
 
-            return 0;
+            return;
           }
     }
 
@@ -582,11 +582,11 @@
 
     if (!p)
      {
-      say ("%$% Loaded %d entr%s into Input History...\n", 
+      say ("%$% Loaded %d entr%s into Input History...\n",
            INFO, j, j>1?"ies":"y");
      }
 
-   return 1;
+   return 0;
 
  }  /**/
 
@@ -619,7 +619,7 @@
 
     if (!x)
      {
-       if (!y)  return; /* 0-0 */
+       if (!y)  return 0; /* 0-0 */
       x=1;
      }
 
@@ -646,10 +646,10 @@
     
    fclose (fp);
 
-   say ("%$% Saved %d History entr%s to %s...\n", 
+   say ("%$% Saved %d History entr%s to %s...\n",
         INFO, i-x, (i-x>1)?"ies":"y", path);
 
-   return 1;
+   return 0;
 
  }  /**/
 

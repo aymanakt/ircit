@@ -7,6 +7,7 @@
 
 #include <main.h>
 #include <terminal.h>
+#include <output.h>
 #include <list.h>
 #include <scroll.h>
 #include <serverio.h>
@@ -89,7 +90,7 @@
 
    lptr=ListfromArray (itcmnd, sizeof(ITCommand), glob_cnt);
    scrptr->nEntries=lptr->nEntries;
-   (List *)scrptr->list=lptr;
+   scrptr->list=lptr;
 
    LoadScrollingList (&hlp_list);
 
@@ -123,7 +124,7 @@
        if (j==sptr->hilited)
         {
          wattron (w, A_REVERSE);
-         (ListEntry *)sptr->c_item=(ListEntry *)eptr;
+         sptr->c_item=eptr;
         }
 
       wmove (w, j-sptr->listwin_start, 0);

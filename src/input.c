@@ -386,7 +386,7 @@
  }  /**/      
 
 
- static __inline__ FollowUp (void)
+ static __inline__ void FollowUp (void)
 
  {
   register int i;

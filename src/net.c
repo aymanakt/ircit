@@ -13,6 +13,7 @@
 #include <terminal.h>
 #include <list.h>
 #include <scroll.h>
+#include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -36,7 +37,7 @@
 
  struct resolved result;
  struct resolved *const r_ptr=&result;
- static f=1;
+ static int f=1;
 
  void InitNet (void)
 
@@ -173,7 +174,7 @@
       say ("%$% Unable to accept IPC connection - %s.\n ", HOT, 
            strerror(errno));
 
-      return;
+      return -1;
      }
 
    len-=sizeof(addr.sun_family);
@@ -207,7 +208,7 @@
 
                  close (fd);
 
-                 return;
+                 return -1;
                 }
 
                 if (fd2!=0)
@@ -234,11 +235,11 @@
 
                 say ("%$% Thanks for that!\n", INFO);
 
-                return;
+                return -1;
               }
            else
               {
-               return;
+               return -1;
               }
         }
 
@@ -258,7 +259,7 @@
         say ("%$% Unauthorized IPC connection %s\n", HOT, addr.sun_path);
 
         close (fd);
-        return;
+        return -1;
        }
 
     if (stat(addr.sun_path, &st)<0)
@@ -269,7 +270,7 @@
         close (fd);
         RemoveIndexbyptr (ipc_ptr, iptr);
 
-        return;
+        return -1;
        }
 
     if (S_ISSOCK(st.st_mode)==0)
@@ -281,7 +282,7 @@
 
         RemoveIndexbyptr (ipc_ptr, iptr);
 
-        return;
+        return -1;
        }
 
    sptr=AddtoSocketsTable (sockets, fd);
@@ -384,7 +385,7 @@
 
     if ((fd=socket(AF_UNIX, SOCK_STREAM, 0))<0)
        {
-        return;
+        return 0;
        }
 
    memset (&addr, 0, sizeof(addr));
@@ -399,14 +400,14 @@
        {
         close (fd);
 
-        return;
+        return 0;
        }
 
     if (chmod(addr.sun_path, S_IRWXU)<0)
        {
         close (fd);
 
-        return;
+        return 0;
        }
 
    memset (&addr, 0, sizeof(addr));
@@ -419,7 +420,7 @@
        {
         close (fd);
 
-        return;
+        return 0;
        }
 
    sprintf (req, "%d", 1);
@@ -520,7 +521,7 @@
              {
               say ("%$% Unable to initiate Telnet service - port undefined.\n",
                    HOT);
-              return;
+              return 0;
              }
  
          memset ((char *)&telnet, 0, sizeof(telnet));
