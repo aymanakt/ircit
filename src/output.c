@@ -11,11 +11,15 @@
 
 #include <main.h>
 #include <terminal.h>
+#include <mvsprintf.h>
+#include <useri.h>
 #include <updates.h>
 #include <list.h>
 #include <queue.h>
 #include <lastlog.h>
 #include <output.h>
+
+extern int mvsprintf (unsigned long *, const char *, va_list);
 
  static Lines *SplitLine (chtype *);
 
@@ -800,7 +804,7 @@ void FancyOutput2 (WINDOW   *w,
  }  /**/
 
 
- int dequeuehold (void)
+ void dequeuehold (void)
 
  {
   register int len=0,

@@ -495,7 +495,7 @@
    ((ScrollingList *)(scrptr->opt_menu))->parent=scrptr;
 
    scrptr->nEntries=ptr->nEntries;
-   (SocketsTable *)scrptr->list=ptr;
+   scrptr->list=ptr;
 
    so_list.lock=&ptr->glock; /* reset it to 0 when done with list! */
 
@@ -561,7 +561,7 @@
        if (j==sptr->hilited)
         {
          _wattron (w, A_REVERSE);
-         (Socket *)sptr->c_item=(Socket *)s_ptr;
+         sptr->c_item=s_ptr;
         }
 
       _wmove (w, j-sptr->listwin_start, 0);

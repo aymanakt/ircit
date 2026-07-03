@@ -1,0 +1,7 @@
+.ai/*
+.claude/*
+codechecker/*
+AGENTS.md
+CLAUDE.md
+scripts/*
+devops/*

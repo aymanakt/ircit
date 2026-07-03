@@ -14,6 +14,7 @@
 #include <people.h>
 #include <sockets.h>
 #include <dcc.h>
+#include <telnet.h>
 #include <thread.h>
 #include <exec.h>
 
@@ -398,9 +399,9 @@
 
      xptr->flags|=type;
 
-      if (type&(16|128|256))  (Index *)xptr->redir=aux;
-      else 
-      if (type&(2|4|8))  (char *)xptr->redir=strdup (nick);
+      if (type&(16|128|256))  xptr->redir=aux;
+      else
+      if (type&(2|4|8))  xptr->redir=strdup (nick);
 
       if (!(shell=valueof("SHELL")))
        {
@@ -425,13 +426,13 @@
      sprintf (s, "%s.%d", th->ipc_path, rand()%100);
      th->lpath=strdup (s);
 
-     (EXEC *)th->params=xptr; 
+     th->params=xptr;
 
       if ((iptr=AddtoSomeoneIndex(ipc_ptr)))
        {
         iptr->protocol=PROTOCOL_IPC;
         iptr->when=time (NULL);
-        (struct thread_params *)iptr->pindex=th;
+        iptr->pindex=th;
 
          if ((xptr->pid=new_thread(th_exec, (void *)th, th_flags, 
                                    th->stack, 1024))<0)

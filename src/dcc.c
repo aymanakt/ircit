@@ -7,6 +7,7 @@
 
 #include <main.h>
 #include <terminal.h>
+#include <arpa/inet.h>
 #include <output.h>
 #include <list.h>
 #include <stack.h>
@@ -68,8 +69,8 @@
    eptr=AddtoList ((lptr=GetDCCListptr()));
    eptr->whatever=dcc;
 
-   (Index *)dcc->index=iptr;
-   (DCCParams *)iptr->pindex=dcc;
+   dcc->index=iptr;
+   iptr->pindex=dcc;
 
     if (((lptr->glock>>0)&0x1)&&((lptr->glock>>1)&0x1))
      {
@@ -356,10 +357,10 @@
    strcpy (sptr->haddress, "Yet to be known");
    sptr->type=SOCK_LISTENINGDCC;
 
-   (Index *)sptr->index=(Index *)iptr;
-   (Socket *)iptr->index=(Socket *)sptr;
+   sptr->index=iptr;
+   iptr->index=sptr;
 
-   (DCCParams *)dptr=(DCCParams *)iptr->pindex;
+   dptr=iptr->pindex;
    dptr->port=sptr->port;
 
    /*dcc_timeout_timer++;
@@ -473,11 +474,11 @@
    ptr->hport=ntohs (hisaddr.sin_port);
 
    /* is this necessary? */
-   (Index *)iptr=(Index *)ptr->index;  /* this yes, see 2 lines bellow  */
-   (Socket *)iptr->index=(Socket *)ptr;
+   iptr=ptr->index;  /* this yes, see 2 lines bellow  */
+   iptr->index=ptr;
 
-   (Someone*)pptr=INDEXTOSOMEONE(iptr);
-   (DCCParams *)dcc=INDEXTODCC(iptr);
+   pptr=INDEXTOSOMEONE(iptr);
+   dcc=INDEXTODCC(iptr);
    
    dcc->flags&=~AWAITINGCONNECTION;
    dcc->flags|=CONNECTED;
@@ -626,10 +627,10 @@
 
          dcc->socket=sptr->sock; /* hmmm.... */
 
-         (Index *)iptr=(Index *)dcc->index;
+         iptr=dcc->index;
 
-         (Socket *)iptr->index=(Socket *)sptr;
-         (Index *)sptr->index=(Index *)iptr;
+         iptr->index=sptr;
+         sptr->index=iptr;
 
          iptr->when=time (NULL);
 
@@ -702,7 +703,7 @@
                         {
                           if (IS_DCC(iptr))
                              {
-                              (DCCParams *)dcc=INDEXTOPROTOCOL(iptr);
+                              dcc=INDEXTOPROTOCOL(iptr);
                               //sptr=(Socket *)iptr->index;
                
                                 if ((dcc->type&DCCSENDING)&&(!iptr->index)&&
@@ -744,7 +745,7 @@
                   {
                     if (IS_DCC(iptr))
                        {
-                        (DCCParams *)dcc=INDEXTOPROTOCOL(iptr);
+                        dcc=INDEXTOPROTOCOL(iptr);
                         sptr=(Socket *)iptr->index;
 
                          if ((dcc->type&DCCSENDING)&&(!iptr->index)&&
@@ -786,7 +787,7 @@
  #define iptr ((Index *)sptr->index)
  #define pptr ((Someone *)(iptr->sindex))
 
- int GetFilePacketfromSocket (Socket *sptr)
+ void GetFilePacketfromSocket (Socket *sptr)
 
  {
   unsigned long rbytes;
@@ -831,7 +832,7 @@
  }  /**/  
 
 
- int SendFilePackettoSocket (Socket *sptr)
+ void SendFilePackettoSocket (Socket *sptr)
 
  {
   char buf[]={[0 ... 2048]=0};
@@ -933,8 +934,8 @@
   register Index *iptr;
   extern SocketsTable *const sockets;
 
-   (Index *)iptr=SOCKETTOINDEX(sptr);
-   (Someone *)pptr=INDEXTOSOMEONE(iptr);
+   iptr=SOCKETTOINDEX(sptr);
+   pptr=INDEXTOSOMEONE(iptr);
 
     if ((IS_CHATTOUS(dcc))||(IS_CHATTOHIM(dcc)))
        {
@@ -2076,8 +2077,8 @@
   register Index *iptr;
   extern SocketsTable *const sockets;
 
-   (Index *)iptr=SOCKETTOINDEX(sptr);
-   (Someone *)pptr=INDEXTOSOMEONE(iptr);
+   iptr=SOCKETTOINDEX(sptr);
+   pptr=INDEXTOSOMEONE(iptr);
 
     if (dcc->type&(DCCCHATTOUS|DCCCHATTOHIM))
        {
@@ -2178,7 +2179,7 @@
                     {
                       if (iptr->protocol==PROTOCOL_DCC)
                          {
-                          (DCCParams *)dcc=INDEXTODCC(iptr);
+                          dcc=INDEXTODCC(iptr);
 
                            if (dcc->flags&AWAITINGCONNECTION)
                               {
@@ -2232,8 +2233,8 @@
   register Someone *pptr;
   register Index *iptr;
 
-  (Index *)iptr=SOCKETTOINDEX(sptr);
-  (Someone *)pptr=INDEXTOSOMEONE(iptr);
+  iptr=SOCKETTOINDEX(sptr);
+  pptr=INDEXTOSOMEONE(iptr);
   
   DisplayHeader (10, 10);
  
@@ -2495,7 +2496,7 @@
    lptr=GetDCCListptr ();
 
    scrptr->nEntries=lptr->nEntries;
-   (List *)scrptr->list=lptr;
+   scrptr->list=lptr;
    ((ScrollingList *)(scrptr->opt_menu))->parent=scrptr;
 
    lptr->glock=0;
@@ -2622,7 +2623,7 @@
   char s[LARGBUF];
   register Index *iptr;
   register Someone *pptr;
-  extern uDCC (char *);
+  extern void uDCC (char *);
   #define dcc ((DCCParams *)_dccptr)
 
    iptr=PROTOCOLTOINDEX(dcc);

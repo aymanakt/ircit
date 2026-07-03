@@ -8,10 +8,6 @@
 **
 */
 
-#ifndef __GNUC__
-# error This program will not compile without GNUC-compatible compiler.
-#endif
-
 #include <limits.h>
 #include <sys/types.h>
 #include <ctype.h>
@@ -96,6 +92,42 @@
 
  extern char *empty_string;
  extern void log (int, ...);
+ extern int nYell (const char *, ...);
+
+ /* Commonly-used functions — forward-declared here so every .c file
+    that includes main.h can see them (C11 requires explicit declarations).  */
+ extern int  ToServer (const char *, ...);
+ extern int  ToSocket (int, const char *, ...);
+ extern void RefreshListContents (void *);
+ extern void DestroyWindow (int, void *);
+ extern void *RetrieveCurrentWindow (void);
+ extern void UpdateSockets (int, const char);
+ extern char *secstostr (time_t, int);
+ extern char *valueof (const char *);
+ extern void BuildSymbolTable (void);
+ extern void ParseUserInput (void);
+ extern void InitSocketsTable (void);
+ extern void InitMisc (void);
+ extern void InitHoldQueue (void);
+ extern void InitNet (void);
+ extern void InitSignals (void);
+ extern void InitPeople (void);
+ extern void InitChannelsTable (void);
+ extern void InitIRCNotify (void);
+ extern void InitUTMPNotify (void);
+ extern void InitIgnoreList (void);
+ extern void InitHistories (void);
+ extern void InitStack (void);
+ extern void InitTimers (void);
+ extern void ProcessConfigfile (void);
+ extern int ProbeSockets (void);
+ extern void DeActivateTimer (int, char *);
+ extern void DisplayHistoryTable (const int, const int);
+ extern void DoUpperStatus (void);
+ extern void ExpandAlias (char *, char *);
+ extern int  Gets (int);
+ extern int  match (unsigned char *, unsigned char *);
+ extern int  RestoreSession (char *, int);
 
  int main (int, char **);
  void InitStuffandThings (void) __attribute__ ((constructor));

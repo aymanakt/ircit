@@ -21,6 +21,10 @@
 #include <useri-data.h>
 #include <serverio.h>
 #include <updates.h>
+#include <prefs.h>
+#include <sockets.h>
+#include <socketio.h>
+#include <notify.h>
 
  MODULEID("$Id: serverio.c,v 1.10 1998/09/19 01:12:39 ayman Beta $");
 
@@ -81,7 +85,7 @@
 
          buf_q[0]=0;
 
-         return;
+         return 1;
         }
      }
 
