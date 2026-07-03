@@ -580,7 +580,7 @@
   const size_t sizeofDialogBox=sizeof(DialogBox);
   DialogBox *auxdxptr;
 
-    if (!((void *)auxdxptr=RetrievePosted(6, ptr))) /*don't trust strangers */ 
+    if (!(auxdxptr=RetrievePosted(6, ptr))) /*don't trust strangers */
        {
         xmalloc(auxdxptr, sizeofDialogBox);
         memset (auxdxptr, 0, sizeofDialogBox);

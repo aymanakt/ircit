@@ -16,14 +16,20 @@
 #include <history.h>
 #include <lastlog.h>
 #include <chanrec.h>
+#include <chanusers.h>
 #include <sockets.h>
 #include <updates.h>
+#include <u_status.h>
 #include <notify.h>
 #include <people.h>
+#include <dcc.h>
+#include <net.h>
 #include <timer.h>
+#include <serverio.h>
 #include <useri.h>
 
 #include <fcntl.h>
+#include <sys/ioctl.h>
 #include <sys/stat.h>
 
  MODULEID("$Id: useri.c,v 1.9 1998/04/06 06:13:44 ayman Beta $");
@@ -288,7 +294,7 @@
   register int j=0;
   char *ch=NULL;
   const Channel *chptr;
-  extern ChannelsTable *const channels;
+  extern ChannelsTable *channels;
 
     if (!args)
      {
@@ -650,7 +656,7 @@
                j;
   char *n,
        c[MAXCHANLEN+1];
-  extern ChannelsTable *const channels;
+  extern ChannelsTable *channels;
 
     if (!args)
      {
@@ -874,7 +880,7 @@
        v[MAXNICKLEN];
   register Channel *chptr;
   register ChanUser *uptr;
-  extern ChannelsTable *const channels;
+  extern ChannelsTable *channels;
 
     if (!args)
      {
@@ -1327,7 +1333,7 @@
       j;
   char c[MAXCHANLEN+2]={0};
   register Channel *chptr;
-  extern ChannelsTable *const channels;
+  extern ChannelsTable *channels;
 
     if (!args)
      {
@@ -1602,7 +1608,7 @@
  STD_IRCIT_COMMAND(uPART)
 
  {
-  extern ChannelsTable *const channels;
+  extern ChannelsTable *channels;
 
     if (ChannelsTableEmpty(channels))
      {
@@ -1847,13 +1853,13 @@
       return;
      }
 
-   (DCCParams *)dcc=INDEXTODCC(iptr);
+   dcc=INDEXTODCC(iptr);
         
     if (dcc->type&(DCCCHATTOUS|DCCCHATTOHIM))
      {
        if (dcc->flags&CONNECTED)
         {
-         (Socket *)sptr=INDEXTOSOCKET(iptr);
+         sptr=INDEXTOSOCKET(iptr);
          ToSocket (sptr->sock, "%s\n", args);
          say ("6<=%s=> %s\n", pptr->name, args);
 
@@ -2252,7 +2258,7 @@
   int i,
       op=0;
   register int j;
-  extern ChannelsTable *const channels;
+  extern ChannelsTable *channels;
 
     if (!args)
        {
@@ -2305,7 +2311,7 @@
              }
           else
              {
-              ShowChanUsers (tok[j]);
+              ShowChanUsers (tok[j], 0);
              }
         }
 
@@ -2419,7 +2425,7 @@
   register int j;
   char c[MAXCHANLEN];
   register Channel *chptr;
-  extern ChannelsTable *const channels; 
+  extern ChannelsTable *channels; 
  
     if (!args)
      {

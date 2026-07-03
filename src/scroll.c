@@ -523,7 +523,7 @@
   const size_t sizeofScrollingList=sizeof(ScrollingList);
   ScrollingList *auxscrptr;
 
-    if (!((void *)auxscrptr=RetrievePosted(4, ptr)))
+    if (!(auxscrptr=RetrievePosted(4, ptr)))
      {
       xmalloc(auxscrptr, sizeofScrollingList);
       memset (auxscrptr, 0, sizeofScrollingList);

@@ -7,6 +7,8 @@
 
 #include <main.h>
 #include <terminal.h>
+#include <useri.h>
+#include <prefs.h>
 #include <output.h>
 #include <updates.h>
 #include <stack.h>
@@ -71,7 +73,7 @@
    ptr->func=Gets;
 
    kptr=PushStack (stk_ptr);
-   (InputProcessor *)kptr->whatever=ptr;
+   kptr->whatever=ptr;
 
  }  /**/
 
@@ -323,7 +325,7 @@
        if (aux->whatever==inptr)
         {
          aux2=PushStack (stack);
-         (InputProcessor *) aux2->whatever=inptr;
+         aux2->whatever=inptr;
         }
 
       free (aux);
@@ -881,7 +883,7 @@
    ptr->wins.flags|=flags;
 
    kptr=PushStack (stack);
-   (InputProcessor *)kptr->whatever=ptr;
+   kptr->whatever=ptr;
 
     if (stack->nEntries==2)
      {

@@ -9,6 +9,8 @@ MODULEID("$Id: serverio.h,v 1.4 1998/03/16 10:09:38 ayman Beta $")
 **
 */
 
+ typedef struct ScrollingList ScrollingList;
+
  /*
  ** Holds all IRCIT's built-in commands and the dynamically craeted ones
  ** through /ALIAS command.
