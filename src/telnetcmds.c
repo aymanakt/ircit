@@ -15,6 +15,7 @@
 #include <telnet.h>
 
 #include <sys/utsname.h>
+#include <net.h>
 
  MODULEID("$Id: telnetcmds.c,v 1.4 1998/03/16 10:09:03 ayman Beta $");
 
@@ -45,7 +46,7 @@
                  ok>=0?ut.sysname:"unknown", ok>=0?ut.release:"unknown",
                  ok>=0?ut.machine:"unknown",
                  localhost(), RawIPToDotted(localip()),
-                 secstostr(t-tt_ptr->online),
+                 secstostr(t-tt_ptr->online, 0),
                  ctime(&t));
 
  }  /**
@@ -290,8 +291,8 @@
                     {
                       if (iptr->protocol==PROTOCOL_TELNET)
                          {
-                          (Telnet *)tptr=INDEXTOPROTOCOL(iptr);
-                          (Socket *)sptr=INDEXTOSOCKET(iptr);
+                          tptr=INDEXTOPROTOCOL(iptr);
+                          sptr=INDEXTOSOCKET(iptr);
                           
                             if (IS_T_INVISIBLE(tptr))
                                {

@@ -14,6 +14,7 @@
 #include <output.h>
 #include <list.h>
 #include <scroll.h>
+#include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -24,6 +25,8 @@
 #include <people.h>
 #include <prefs.h>
 #include <history.h>
+#include <timer.h>
+#include <ignore.h>
 #include <telnet.h>
 #include <telnetcmds.h>
 
@@ -42,7 +45,7 @@
   ToSocket (nsocket, " All connections originating from your host are currently ignorred!\r\n"); \
   close (nsocket); \
   say ("%$% Rejected 3Telnet connection from 03%s - Site listed as ignored.\n", TELH, host); \
-  return
+  return 0
 
  int AnswerTelnetRequest (Socket *__sptr)
  
@@ -104,7 +107,7 @@
      {
       shutdown (nsocket, 0); 
 
-      return;
+      return 0;
      }
 
    setsockopt (nsocket, SOL_SOCKET, SO_KEEPALIVE, (void *)&opt, sizeof(int));
@@ -222,11 +225,11 @@
    ptr->flag&=~AWAITINGUSERNAME;
    ptr->flag|=CONNECTEDTELNET;
 
-   (Telnet *)iptr->pindex=(Telnet *)tptr;
-   (Index *)tptr->index=(Index *)iptr;
+   iptr->pindex=tptr;
+   tptr->index=iptr;
 
-   (Socket *)iptr->index=(Socket *)ptr;
-   (Index *)ptr->index=(Index *)iptr;
+   iptr->index=ptr;
+   ptr->index=iptr;
 
    UpdateSockets (ptr->type, '+');
 
@@ -310,8 +313,8 @@
   register Someone *pptr;
   Telnet *tptr;
 
-   (Index *)iptr=SOCKETTOINDEX(sptr);
-   (Someone *)pptr=(Someone *)iptr->sindex;
+   iptr=SOCKETTOINDEX(sptr);
+   pptr=iptr->sindex;
    tptr=INDEXTOTELNET(iptr);
 
     if (DetectedFlood(pptr, tptr))

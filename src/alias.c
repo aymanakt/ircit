@@ -12,7 +12,13 @@
 #include <alias.h>
 #include <FPL.h>
 
- MODULEID("$Id: alias.c,v 1.2 1998/09/19 02:45:51 ayman Beta $");
+#include "FPL_protos.h"
+#include "output.h"
+#include "serverio.h"
+
+MODULEID("$Id: alias.c,v 1.2 1998/09/19 02:45:51 ayman Beta $");
+
+extern int skip_atoi(const char **);
 
  List AliasList;
  List *const als_ptr=&AliasList;
@@ -47,7 +53,7 @@
        memset (alsptr, 0, sizeof(Alias));
 
        eptr=AddtoList (lptr);
-       (Alias *)eptr->whatever=alsptr;
+       eptr->whatever=alsptr;
 
        ((Alias *)eptr->whatever)->name=strdup (name);
      }
@@ -129,9 +135,7 @@
   char tmp[]={[0 ... 32]=0};
   const char *digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   #define do_div(n, base) ({ \
-     int __res; \
-      __asm__("divl %4":"=a" (n),"=d" (__res):"0" (n),"1" (0),"r" (base)); \
-      __res; })
+     int __res = (n) % (base); (n) /= (base); __res; })
 
    if (num==0)
     {
@@ -545,7 +549,7 @@
                  unsigned attr;
                 } Token_;
 
- int ExpandAlias (char *fmtt, char *in)
+ void ExpandAlias (char *fmtt, char *in)
 
  {
   int qt=0,

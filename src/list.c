@@ -11,7 +11,10 @@
 
 #include <signal.h>
 
- MODULEID("$Id: list.c,v 1.5 1998/04/06 06:13:44 ayman Beta $");
+#include "output.h"
+#include "windows-aux.h"
+
+MODULEID("$Id: list.c,v 1.5 1998/04/06 06:13:44 ayman Beta $");
 
 
  ListEntry *AddtoList (List *ptr)
@@ -226,7 +229,7 @@
 
     if (!a)
        {
-        return;
+        return NULL;
        }
 
    xmalloc(ptr, sizeofList);

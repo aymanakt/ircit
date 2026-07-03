@@ -7,6 +7,7 @@
 
 #include <main.h>
 #include <terminal.h>
+#include <prefs.h>
 #include <list.h>
 #include <scroll.h>
 #include <history.h>

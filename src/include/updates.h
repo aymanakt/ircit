@@ -303,13 +303,13 @@ MODULEID("$Id: updates.h,v 1.7 1998/04/08 08:54:34 ayman Beta $")
  #define LOADMAINWIN() \
        { \
         status_busy=0; \
-        (WINDOW *)mt_ptr->c_window=MainWin; \
+        mt_ptr->c_window=MainWin;\
        }
 
  #define LOADSPAREWIN() \
        { \
         status_busy=1; \
-        (WINDOW *)mt_ptr->c_window=SpareWin; \
+        mt_ptr->c_window=SpareWin;\
        }
 
  #define iscurchan(x) (!strcasecmp((x), cht_ptr->c_channel))

@@ -87,8 +87,8 @@
       return 0;
      }
 
-   (Notify *)aux->whatever=(Notify *)nptr;
-   (ListEntry *)nptr->link=(ListEntry *)aux;
+   aux->whatever=nptr;
+   nptr->link=aux;
 
    return ptr->nEntries;
 
@@ -126,7 +126,7 @@
 
          while ((eptr!=NULL)&&(!found))
           {
-           (Notify *)nptr=(Notify *)eptr->whatever;
+           nptr=eptr->whatever;
 
             if (arethesame(tok[j], nptr->name))
              {
@@ -163,7 +163,7 @@
 
  #define nptr ((Notify *)eptr->whatever)
 
- int ClearNotifyList (List *ptr, int how, void *v)
+ void ClearNotifyList (List *ptr, int how, void *v)
 
  {
     if (ptr->nEntries==0)
@@ -193,7 +193,7 @@
                   ptr->nEntries=0;
                   ptr->head=ptr->tail=NULL;
 
-                  return i;
+                  return;
                 }
 
            case NAME:
@@ -211,13 +211,13 @@
                              free (nptr);
                              RemovefromList (ptr, eptr);
 
-                             return 1;
+                             return;
                             }
                        }
 
                  say ("%$% %s isn't in Notify list.\n", MILD, name);
 
-                 return 0;
+                 return;
                 }
 
            case NUMBER:
@@ -232,7 +232,7 @@
                       {
                        say ("%$% You don't have that many entries.\n", MILD);
 
-                       return 0;
+                       return;
                       }
 
                    for ( ; eptr!=NULL; eptr=eptr->next)
@@ -243,11 +243,11 @@
                              free (nptr);
                              RemovefromList (ptr, eptr);
 
-                             return 1;
+                             return;
                             }
                        }
 
-                 return 0;
+                 return;
                 }
           }
 
@@ -402,7 +402,7 @@
 
         for ( ; lptr!=NULL; lptr=lptr->next)
          {
-          (Notify *)nptr=(Notify *)lptr->whatever;
+          nptr=lptr->whatever;
           strcpy (&s[strlen(s)], nptr->name);
           s[strlen(s)]=' ';
          }
@@ -429,7 +429,7 @@
      {
        for ( ; eptr!=NULL; eptr=eptr->next)
         {
-         (Notify *)tptr=(Notify *)eptr->whatever;
+         tptr=eptr->whatever;
 
           if ((arethesame(ut->ut_name, tptr->name))&&(tptr->xtra==0))
            {
@@ -456,7 +456,7 @@
 
     for ( ; eptr!=NULL; eptr=eptr->next)
      {
-      (Notify *)tptr=(Notify *)eptr->whatever;
+      tptr=eptr->whatever;
 
        if ((tptr->flags&1)&&(tptr->flags&2)&&!(tptr->flags&4))
         {

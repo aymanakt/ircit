@@ -22,8 +22,8 @@
  int CheckFileBeforeGetting (DCCParams *);
 
  int ParseDCC_ (Socket *);
- int GetFilePacketfromSocket (Socket *);
- int SendFilePackettoSocket (Socket *);
+ void GetFilePacketfromSocket (Socket *);
+ void SendFilePackettoSocket (Socket *);
  
  void EOFDCCConnection (Socket *, DCCParams *);
  int GetAllPendingFiles (Someone *);
