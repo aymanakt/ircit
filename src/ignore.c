@@ -35,8 +35,8 @@
 
    aux=AddtoList (ptr);
 
-   (Ignore *)aux->whatever=(Ignore *)gptr;
-   (ListEntry *)gptr->link=(ListEntry *)aux;
+   aux->whatever=gptr;
+   gptr->link=aux;
 
    return ptr->nEntries;
 
@@ -147,7 +147,7 @@
                            {
                             say ("%$% You really need -h.\n", MILD);
 
-                            return;
+                            return 0;
                            }
 
                         for ( ; eptr!=NULL; eptr=eptr->next)/*apply change all*/
@@ -209,7 +209,7 @@
                   plain_entry:
                    while ((eptr!=NULL)&&(!found))
                          {
-                          (Ignore *)gptr=(Ignore *)eptr->whatever;
+                          gptr=eptr->whatever;
 
                            if (arethesame(aux, gptr->host))
                               {
@@ -301,7 +301,7 @@
        {
         say ("%$% No entries found in Ignore List.\n", MILD);
 
-        return;
+        return 0;
        }
 
    switch (how)
@@ -317,7 +317,7 @@
                          {
                           i++;
                           aux=eptr->next;
-                          (Ignore *)gptr=(Ignore *)eptr->whatever;
+                          gptr=eptr->whatever;
                           COMMUNIQUE();
                           free (gptr);
                           free (eptr);
@@ -343,7 +343,7 @@
                    while (eptr!=NULL)
                        {
                         aux=eptr->next;
-                        (Ignore *)gptr=(Ignore *)eptr->whatever;
+                        gptr=eptr->whatever;
 
                          if (gptr->flags&mode)
                             {
@@ -379,7 +379,7 @@
 
                    for ( ; eptr!=NULL; eptr=eptr->next)
                        {
-                        (Ignore *)gptr=(Ignore *)eptr->whatever;
+                        gptr=eptr->whatever;
 
                           if (arethesame(name, gptr->host))
                              {
@@ -414,7 +414,7 @@
                        {
                          if (++n==*m)
                             {
-                             (Ignore *)gptr=(Ignore *)eptr->whatever;
+                             gptr=eptr->whatever;
 
                              ACTUAL_REMOVAL()
 
@@ -691,7 +691,7 @@
 
     for ( ; eptr!=NULL; eptr=eptr->next)
      {
-      (Ignore *)gptr=(Ignore *)eptr->whatever;
+      gptr=eptr->whatever;
 
        if (IS_MATCHINGIGNORETYPE())
         {
@@ -708,9 +708,9 @@
 
  }  /**/
 
-static  ActuallyPrint (const Ignore *, char *, size_t);
+static void ActuallyPrint (const Ignore *, char *, size_t);
 
- static __inline__ ActuallyPrint (const Ignore *gptr, char *s, size_t cnt)
+ static __inline__ void ActuallyPrint (const Ignore *gptr, char *s, size_t cnt)
 
  {
   char t[6];

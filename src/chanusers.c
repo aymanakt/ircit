@@ -23,7 +23,7 @@
 
  MODULEID("$Id: chanusers.c,v 1.9 1998/04/09 14:45:39 ayman Beta $");
 
- extern ChannelsTable *const channels;
+ extern ChannelsTable *channels;
 
 
  __inline__ void HashChanuser (int i, Channel *chptr, ChanUser *uptr)
@@ -794,7 +794,7 @@
          auxscrptr->hight=10;
          auxscrptr->attrs=attrs;
          auxscrptr->nEntries=ptr->nEntries;
-         (Channel *)auxscrptr->list=ptr;
+         auxscrptr->list=ptr;
          sprintf (auxscrptr->caption, " Users on %.9s ", ptr->channel);
          //ptr->glock=0;
          auxscrptr->lock=&ptr->glock;
@@ -843,7 +843,7 @@
           if (j==sptr->hilited)
              {
               _wattron (w, A_REVERSE);
-              (ChanUser *)sptr->c_item=(ChanUser *)s_ptr;
+              sptr->c_item=s_ptr;
              }
 
          _wmove (w, j-sptr->listwin_start, 0);

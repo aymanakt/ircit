@@ -19,6 +19,13 @@
 #include <sockets.h>
 #include <people.h>
 #include <dcc.h>
+#include <serverio.h>
+#include <exec.h>
+#include <telnet.h>
+#include <prefs.h>
+#include <misc.h>
+#include <windows-aux.h>
+#include <net.h>
 #include <socketio.h>
 
 #include <sys/socket.h>
@@ -490,7 +497,7 @@ const int sizeofSocket=sizeof(Socket);
                   curserver(), st_ptr->c_serverport);
             }
        
-        return;
+        return 0;
        }
     else
     if (FORCIBLE)
@@ -612,7 +619,7 @@ const int sizeofSocket=sizeof(Socket);
 
       Flash (3, 0);
       
-      return;
+      return 0;
      }
 
    RemoveIndexbyptr (pptr, iptr);
@@ -946,7 +953,7 @@ const int sizeofSocket=sizeof(Socket);
            }
          }
 
-       return; /* start afresh */
+       return 0; /* started afresh */
      }
 
    goto again;
@@ -966,7 +973,7 @@ const int sizeofSocket=sizeof(Socket);
         {
          sptr->flag|=FIRING_SQUAD;
 
-          if (isup()==socket)  {Flash(1, 1); isup()=0;}
+          if (isup()==socket)  {Flash(1, 1); st_ptr->c_serversocket=0;}
 
          return 0;
         }

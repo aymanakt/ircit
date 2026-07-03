@@ -6,6 +6,7 @@
 */
 
 #include <main.h>
+#include <stdio.h>
 
  MODULEID("$Id: str.c,v 1.8 1998/04/08 08:54:11 ayman Beta $");
 

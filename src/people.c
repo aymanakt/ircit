@@ -8,8 +8,10 @@
 #include <main.h>
 #include <terminal.h>
 #include <updates.h>
+#include <list.h>
 #include <sockets.h>
 #include <people.h>
+#include <dcc.h>
 #include <telnet.h>
 
  MODULEID("$Id: people.c,v 1.7 1998/04/06 06:13:44 ayman Beta $");
@@ -64,12 +66,11 @@
    xmalloc(iptr, (sizeof(Index)));
    memset (iptr, 0, sizeof(Index));
 
-   (Someone *)iptr->sindex=(Someone *)ptr;
+   iptr->sindex=ptr;
 
     if (!IndexEmpty(ptr))
        {
         ptr->tail->next=iptr;
-        ptr->tail=iptr;
        }
     else
        {
@@ -266,7 +267,7 @@
                 {
                  register Telnet *tptr;
 
-                  (Telnet *)tptr=INDEXTOPROTOCOL(iptr);
+                  tptr=INDEXTOPROTOCOL(iptr);
                   
                   memset (tptr, 0, sizeof(Telnet));
                   free (tptr);
@@ -647,7 +648,7 @@
                     {
                       if (iptr->protocol==PROTOCOL_DCC)
                          {
-                          (DCCParams *)dcc=INDEXTODCC(iptr);
+                          dcc=INDEXTODCC(iptr);
 
                            if (dcc->type&(DCCCHATTOUS|DCCCHATTOHIM))
                               {
