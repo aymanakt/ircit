@@ -361,7 +361,7 @@
         {
          eptr=AddtoList (lptr);
 
-         (Preference *)eptr->whatever=&ptr->entry;
+         eptr->whatever=&ptr->entry;
         }
 	
       ColorsList (ptr->right, lptr);
@@ -387,7 +387,7 @@
        ColorsList (preferences, ptr);
 
        colors_list.nEntries=ptr->nEntries;
-       (List *)colors_list.list=ptr;
+       colors_list.list=ptr;
      }
 
    LoadScrollingList (&colors_list);
@@ -430,7 +430,7 @@
        if (i==sptr->hilited)
         {
          _wattron (w, A_REVERSE);
-         (ListEntry *)sptr->c_item=eptr;
+         sptr->c_item=eptr;
         }
 
       _wmove (w, i-sptr->listwin_start, 0);
@@ -468,7 +468,7 @@
  {
   #define __pref ((Preference *)((ListEntry *)ptr)->whatever)
 
-   (Preference *)colormap.ptr=(Preference *)__pref;
+   colormap.ptr=__pref;
 
    LoadColorMap (&colormap);
 

@@ -14,9 +14,14 @@
 #include <output.h>
 #include <updates.h>
 #include <list.h>
+#include <match.h>
 #include <scroll.h>
 #include <lastlog.h>
 #include <chanrec.h>
+#include <chanusers.h>
+#include <people.h>
+#include <sockets.h>
+#include <dcc.h>
 #include <modes.h>
 
  MODULEID("$Id: modes.c,v 1.5 1998/04/06 06:13:44 ayman Beta $");

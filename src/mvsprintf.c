@@ -17,7 +17,7 @@
 
  #define is_digit(c) ((c)>='0'&&(c)<='9')
 
- __inline__ int skip_atoi(const char **s)
+ int skip_atoi(const char **s)
 
  {
   register int i=0;
@@ -38,9 +38,7 @@
 #define SMALL	64		/* use 'abcdef' instead of 'ABCDEF' */
 
  #define do_div(n,base) ({ \
- int __res; \
-  __asm__("divl %4":"=a" (n),"=d" (__res):"0" (n),"1" (0),"r" (base)); \
-  __res; })
+ int __res = (n) % (base); (n) /= (base); __res; })
 
  unsigned long *number (unsigned long *str, 
                         int num, 

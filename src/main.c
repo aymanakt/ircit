@@ -7,7 +7,13 @@
 
 #include <main.h>
 #include <terminal.h>
+#include <prefs.h>
 #include <updates.h>
+#include <list.h>
+#include <people.h>
+#include <sockets.h>
+#include <dcc.h>
+#include <fpl.h>
 
 #include <signal.h>
 

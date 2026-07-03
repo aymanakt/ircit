@@ -187,6 +187,7 @@ MODULEID("$Id: chanrec.h,v 1.5 1998/04/08 08:54:34 ayman Beta $")
  void PrintChannelsTable (ChannelsTable *);
 
  Ban *AddBan (Channel *, char *);
+ int RemoveBan (Channel *, int, ...);
  int ResetBanList (Channel *);
  int FlushBans (Channel *);
  void ShowBanList (Channel *, int);

@@ -26,7 +26,7 @@ MODULEID("$Id: notify.h,v 1.2 1998/02/20 14:58:44 ayman Beta $")
  int inNotifyList (const List *, const char *);
  static int _AddtoNotifyList (List *, Notify *);
  void AddtoNotify (List *, char *, int);
- int ClearNotifyList (List *, int , void *);
+ void ClearNotifyList (List *, int , void *);
  void RemovefromNotify (List *, char *);
 
  void ResetIRCNotify (void);

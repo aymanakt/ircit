@@ -78,7 +78,7 @@
  }  /**/
 
 
- static __inline__ ProcessSERVERS (char *line)
+ static __inline__ void ProcessSERVERS (char *line)
 
  {
   char *s;
@@ -94,7 +94,7 @@
  }  /**/
 
 
- static __inline__ ProcessCHANNELS (char *line)
+ static __inline__ void ProcessCHANNELS (char *line)
 
  {
 
@@ -102,7 +102,7 @@
  }  /**/
 
 
- static __inline__ ProcessSETS (char *line)
+ static __inline__ void ProcessSETS (char *line)
 
  {
   char *s;
@@ -124,7 +124,7 @@
  }  /**/
 
 
- static __inline__ ProcessIRCNOTIFY (char *line)
+ static __inline__ void ProcessIRCNOTIFY (char *line)
 
  {
   extern List *irc_notify;
@@ -135,7 +135,7 @@
  }  /**/
 
 
- static __inline__ ProcessUTMPNOTIFY (char *line)
+ static __inline__ void ProcessUTMPNOTIFY (char *line)
 
  {
   extern List *utmp_notify;
@@ -146,7 +146,7 @@
  }  /**/
 
 
- static __inline__ ProcessINETNOTIFY (char *line)
+ static __inline__ void ProcessINETNOTIFY (char *line)
 
  {
 
@@ -281,7 +281,7 @@
             z=PRO50
 
  
- int ProcessConfigfile (void)
+ void ProcessConfigfile (void)
 
  {
   char line[80],

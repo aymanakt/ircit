@@ -1,0 +1,8 @@
+#ifndef IRCIT_VERSION_H
+#define IRCIT_VERSION_H
+
+#define IRCIT_MAJOR 0
+#define IRCIT_MINOR 3
+#define IRCIT_PATCH 1
+
+#endif //IRCIT_VERSION_H

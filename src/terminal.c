@@ -13,6 +13,7 @@
 #include <terminal.h>
 #include <output.h>
 #include <scroll.h>
+#include <stack.h>
 #include <colors.h>
 #include <headers.h>
 #include <figures.h>
@@ -20,6 +21,7 @@
 #include <updates.h>
 #include <history.h>
 #include <prefs.h>
+#include <windows.h>
 
 #include <stdarg.h>
 #include <fcntl.h>
@@ -344,7 +346,7 @@
  }  /**/
 
 
- void UpdateWindows (which)
+ void UpdateWindows (int which)
 
  {
     if (which&EVERYTHING)
@@ -428,7 +430,7 @@
    scrollok (MainWin,  TRUE);
    scrollok (MmainWin, FALSE);
 
-   (WINDOW *)mt_ptr->c_window=MainWin;
+   mt_ptr->c_window=MainWin;
 
  } /**/
 

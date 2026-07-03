@@ -1,0 +1,13 @@
+cmake-build-debug/
+build/
+.cmake/
+.idea/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.o
+/ircit
+src/fpl-14.11/libfpl.a
+include/config.h
+Testing/
