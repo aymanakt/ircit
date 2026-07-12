@@ -6,48 +6,57 @@
 */
 
 #include <main.h>
+#include <sched.h>
 #include <thread.h>
 
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <signal.h>
-#include <asm/unistd.h>
+#include <sched.h>
+#include <errno.h>
 
  MODULEID("$Id: thread.c,v 1.3 1998/02/15 11:27:29 ayman Beta $");
 
+/* Trampoline: glibc clone() expects int(*)(void*); IRCIT uses void(*)(void*). */
+struct clone_wrapper {
+    clonefunc fn;
+    void *data;
+};
 
-int new_thread (clonefunc fn, void *data, 
-                unsigned int flags, void *stack, 
+static int clone_trampoline(void *arg)
+{
+    struct clone_wrapper *w = (struct clone_wrapper *)arg;
+    w->fn(w->data);
+    _exit(0);
+}
+
+int new_thread (clonefunc fn, void *data,
+                unsigned int flags, void *stack,
                 unsigned int stacksize)
 {
-  long retval; 
+  long retval;
   void **newstack;
+  struct clone_wrapper wrap;
+
+   wrap.fn = fn;
+   wrap.data = data;
 
    /* make the new stack: */
-   newstack=(void **)stack;
+   newstack = (void **)stack;
 
    /* rearrange pointer so it's at the other end of the memory block */
-   newstack=(void **)(stacksize+(char *)newstack);
+   newstack = (void **)(stacksize + (char *)newstack);
 
-   /* put the (void *)data on the new stack */
-   *--newstack=data;
+   /* place the wrapper struct at the top of the new stack */
+   newstack = (void **)((char *)newstack - sizeof(struct clone_wrapper));
+   memcpy(newstack, &wrap, sizeof(struct clone_wrapper));
 
-  __asm__ __volatile__(
-    "int $0x80\n\t"
-    "testl %0,%0\n\t"
-    "jne 1f\n\t"
-    "call *%3\n\t"
-    "movl %2,%0\n\t"
-    "int $0x80\n"
-    "1:\t"
-    :"=a" (retval)
-    :"0" (__NR_clone),"i" (__NR_exit),
-     "r" (fn),"b" (flags|SIGCHLD),"c" (newstack));
+  retval = clone(clone_trampoline, newstack,
+                 flags | SIGCHLD, (void *)newstack);
 
-  if (retval<0) 
+  if (retval < 0)
      {
-      errno=(-retval);
-      retval=(-1);
+      retval = -1;
      }
 
   return retval;

@@ -1,1 +1,85 @@
-./doc/INSTALL
+INSTALL — IRCIT 0.3.1
+=======================
+
+Dependencies
+------------
+
+Required:
+  - GCC or Clang — IRCIT uses GNU C extensions (__attribute__, statement
+    expressions) which both GCC and Clang support.
+  - CMake >= 3.10
+  - Ncurses — a compatible static build of ncurses 5.2 is vendored under
+    packages/ncurses-5.2/ and used by default. No system ncurses needed.
+
+Optional (for system ncurses fallback):
+  - System ncurses development headers and library. Pass
+    -DFORCE_SYSTEM_NCURSES=ON to cmake to use the system ncurses instead
+    of the vendored one. Note that modern ncurses 6.x may expose ABI
+    differences that prevent compilation — the vendored 5.2 is the safe path.
+
+
+Build Instructions
+------------------
+
+1. Create a build directory (out-of-tree build):
+
+       mkdir build && cd build
+
+2. Configure:
+
+       cmake .. -DCMAKE_BUILD_TYPE=Debug
+
+   For a release build, use -DCMAKE_BUILD_TYPE=Release.
+
+   To use system ncurses instead of the vendored one:
+
+       cmake .. -DFORCE_SYSTEM_NCURSES=ON
+
+   To point at a different ncurses installation:
+
+       cmake .. -DNCURSES_PREFIX=/path/to/ncurses
+
+3. Build:
+
+       cmake --build . -j$(nproc)
+
+4. The binary is at ./ircit. Verify it works:
+
+       ./ircit -v
+
+
+Installation
+------------
+
+To install config files and the man page:
+
+       cmake --build . --target install
+
+This will:
+  - Copy etc/ircit.conf and etc/ircit.fpl to ~/.ircit/ (only if not
+    already present — existing files are never overwritten).
+  - Install doc/ircit.1 to share/man/man1/.
+
+The ircit binary itself is not installed to a system path by default.
+Copy it to your preferred bin directory manually:
+
+       cp ircit ~/bin/   # or /usr/local/bin/
+
+
+Troubleshooting
+---------------
+
+Compilation fails with "macro names must be identifiers" or similar:
+  The vendored ncurses 5.2 was not found. Ensure
+  packages/ncurses-5.2/lib/libncurses.a exists. If missing, re-run the
+  ncurses 5.2 build or use -DFORCE_SYSTEM_NCURSES=ON.
+
+Linker errors about multiple definitions:
+  Ensure cmake is adding -fcommon and -fgnu89-inline to the compile
+  flags. These are set automatically by the CMakeLists.txt.
+
+Compiler complains about GNU extensions:
+  Ensure you are using GCC or Clang. Other compilers (MSVC, ICC classic)
+  may not support the GNU C extensions used throughout the codebase.
+
+       export CC=gcc    # or: export CC=clang

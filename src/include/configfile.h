@@ -20,14 +20,14 @@ MODULEID("$Id: configfile.h,v 1.2 1998/03/16 10:09:38 ayman Beta $")
 
  static unsigned long FileExist (char *);
 
- int ProcessConfigfile (void);
+ void ProcessConfigfile (void);
  void ProcessSection (char *, int);
- static ProcessSERVERS (char *);
- static ProcessCHANNELS (char *);
- static ProcessSETS (char *);
- static ProcessIRCNOTIFY (char *);
- static ProcessUTMPNOTIFY (char *);
- static ProcessINETNOTIFY (char *);
+ static void ProcessSERVERS (char *);
+ static void ProcessCHANNELS (char *);
+ static void ProcessSETS (char *);
+ static void ProcessIRCNOTIFY (char *);
+ static void ProcessUTMPNOTIFY (char *);
+ static void ProcessINETNOTIFY (char *);
  static void ActuallyProcess (char *, int);
 
  static void SaveConfigFile (char *, void (*)(FILE *));
