@@ -13,6 +13,8 @@
 #include <stack.h>
 #include <updates.h>
 #include <sockets.h>
+#include <socketio.h>
+#include <useri.h>
 #include <prefs.h>
 
 #include <netdb.h>
@@ -56,7 +58,7 @@
 
        while ((lptr!=NULL)&&(!found))
         {
-         (Server *)vptr=(Server *)lptr->whatever;
+         vptr=lptr->whatever;
 
           if ((arethesame(vptr->server, server))&&(vptr->port==port))
            {
@@ -85,8 +87,8 @@
 
     if (lptr!=NULL)
      {
-      (Server *)lptr->whatever=(Server *)vptr;
-      (ListEntry *)vptr->link=(ListEntry *)lptr;
+      lptr->whatever=vptr;
+      vptr->link=lptr;
 
       UpdateServerTable (SERV_SERVERS, ptr->nEntries, NULL, '+');
 
@@ -728,7 +730,7 @@ int serverid (char *server, unsigned long port)
    ((ScrollingList *)(scrptr->opt_menu))->parent=scrptr;
 
    scrptr->nEntries=ptr->nEntries;
-   (List *)scrptr->list=ptr;
+   scrptr->list=ptr;
 
    srv_list.lock=&ptr->glock;
 
@@ -763,7 +765,7 @@ int serverid (char *server, unsigned long port)
        if (j==sptr->hilited)
         {
          _wattron (w, A_REVERSE);
-         (ListEntry *)sptr->c_item=(ListEntry *)lptr;
+         sptr->c_item=lptr;
         }
 
        if (vptr->when)

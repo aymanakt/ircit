@@ -28,6 +28,8 @@
 #include <chanrec.h> 
 #include <notify.h>
 #include <prefs.h>
+#include <useri.h>
+#include <timer.h>
 #include <u_status.h>
 #include <lstatus.h>
 #include <events.h>

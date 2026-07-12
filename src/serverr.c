@@ -19,7 +19,11 @@
 #include <history.h>
 #include <lastlog.h>
 #include <chanrec.h>
+#include <chanusers.h>
+#include <ctcp.h>
 #include <ignore.h>
+#include <timer.h>
+#include <servers.h>
 #include <misc.h>
 #include <notify.h>
 #include <updates.h>
@@ -39,7 +43,7 @@
  extern int whois_issued;
  extern time_t aux;
 
- extern ChannelsTable *const channels;
+ extern ChannelsTable *channels;
  extern InputHistory *tab;
  extern chtype *f;
  extern chtype *chf;
@@ -108,7 +112,7 @@
 
    {
     chtype *chs;
-    register *auxptr;
+    register void *auxptr;
 
      chs=PreSay ("%$% %s [%s] invites you to %s.\n" 
                  "%$% Type /JOIN or press CTRL-F to join %s.\n",
@@ -1574,7 +1578,7 @@
                          {
                            if (iptr->protocol==PROTOCOL_DCC)
                               {
-                               (DCCParams *)dcc=INDEXTODCC(iptr);
+                               dcc=INDEXTODCC(iptr);
                           
                                 if (dcc->flags&AWAITINGCONNECTION)
                                    {
@@ -1582,7 +1586,7 @@
                                        {
                                         say ("%$% %s to %s.\n", INFO,
                                              "Auto-Closing DCC CHAT offer", s);
-                                        (Socket *)sptr=INDEXTOSOCKET(iptr);
+                                        sptr=INDEXTOSOCKET(iptr);
                                         close (sptr->sock);
                                         RemovefromSocketsTable (sockets, 
                                                                 sptr->sock);
@@ -1598,7 +1602,7 @@
                                         say ("%$% %s (%s %d) to %s.\n", INFO,
                                              "Auto-closing DCC SEND ", 
                                               dcc->file, dcc->size, s);
-                                        (Socket *)sptr=INDEXTOSOCKET(iptr);
+                                        sptr=INDEXTOSOCKET(iptr);
                                         close (sptr->sock);
                                         RemovefromSocketsTable (sockets, 
                                                                 sptr->sock);

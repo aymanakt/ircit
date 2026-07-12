@@ -13,13 +13,19 @@
 #include <terminal.h>
 #include <updates.h>
 #include <list.h>
-#include <sockets.h>
 #include <lastlog.h>
+#include <chanrec.h>
+#include <chanusers.h>
+#include <mvsprintf.h>
+#include <fnmatch.h>
+#include <sockets.h>
 
 #include <FPL.h>
 #include <FPL_protos.h>
 #include <events.h>
 #include <intrins.h>
+
+extern int mvsprintf (unsigned long *, const char *, va_list);
 
  #define fpl_return_int(x...) fplSendTags(key, FPLSEND_INT, x, FPLSEND_DONE)
  #define fpl_return_str(x...) \
@@ -117,9 +123,6 @@
                                   ((const char *)arg->argv[2]):NULL)));
 
  }  /**/
-
-
-#include <chanrec.h>
 
 
  static __inline__ const char *Predo (const char *argv0)
@@ -437,7 +440,7 @@
  {
   extern char buf_i[];
 
-    if (!*((char *)arg->argv[0]))  return;
+    if (!*((char *)arg->argv[0]))  return 0;
  
    vsnprintf (buf_i, 512, (char *)arg->argv[0], (char *)&arg->argv[1]);
  
